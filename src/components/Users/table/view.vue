@@ -8,6 +8,7 @@
             module="Users"
             :dataGetter="`app/users`"
             :get-data="getUsers"
+            :delete-item="deleteUser"
             :columns="columns"
             :actions="['edit', 'info', 'remove']"
       ></data-table>
@@ -20,6 +21,7 @@ import BaseCrud from '@/components/BaseCRUD/view'
 import DataTable from '@/components/DataTable/DataTable'
 import crudMixin from '@/mixins/crudMixin'
 import roles from '@/helpers/roles'
+import usersApi from '@/api/users'
 
 export default {
   name: 'UserTable',
@@ -78,6 +80,9 @@ export default {
           params
         }
       )
+    },
+    async deleteUser(id) {
+      await usersApi.delete(id)
     }
   }
 }

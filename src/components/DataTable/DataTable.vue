@@ -459,7 +459,8 @@ export default {
         this.loadData()
         this.temp = {}
       } catch (err) {
-        if (err.response.data.detail) {
+        console.log(err)
+        if (err.response && err.response.data.detail) {
           this.$message({
             message: err.response.data.detail,
             type: 'error'
