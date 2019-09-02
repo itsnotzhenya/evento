@@ -1,0 +1,77 @@
+
+.el-tree {
+  .el-table .hidden {
+    display: none;
+  }
+
+  .expanded {
+    transition: transform .3s;
+    transform: rotate(90deg);
+  }
+
+  .el-table .el-button {
+    transition: transform .3s;
+  }
+
+  .el-tree {
+    //width: 700px;
+
+    .el-icon-delete {
+      color: red;
+    }
+  }
+
+  .el-tree-node {
+    //padding: 10px;
+  }
+
+  .custom-tree-node {
+    display: block;
+    width: 100%;
+    position: relative;
+  }
+
+  .buttons {
+    /*float: right;*/
+    position: absolute;
+    right: 0;
+  }
+
+  .buttons i {
+    margin: 0 10px;
+  }
+
+  &__buttons {
+    float: right;
+    margin-right: 10px;
+
+    i {
+      margin: 0 10px;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+
+  &__input {
+    width: 140px;
+    .el-input__inner {
+      height: 20px !important;
+      line-height: 20px !important;
+      font-size: 12px;
+    }
+  }
+
+  .el-checkbox {
+    line-height: 14px;
+  }
+}
+
+.el-tree-node__content:hover{
+  background-color: rgba(0, 0, 0, 0.16) !important;
+}
+
+.el-tree-node:focus>.el-tree-node__content {
+  background-color: rgba(0, 0, 0, 0.16) !important;
+}

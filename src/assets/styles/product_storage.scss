@@ -1,0 +1,45 @@
+.name_input,
+.parent_input,
+.unit_input{
+  margin-bottom: 15px;
+}
+
+.el-row{
+  margin-bottom: 20px;
+}
+
+.el-row .edit{
+  margin-bottom: 15px;
+}
+
+.tree_header{
+  //padding: 10px 0;
+  font-weight: bolder;
+}
+
+.goods_list .container{
+  margin: 0;
+  padding-left: 0;
+}
+
+.table_wrap{
+  padding: 10px 0;
+  width: 1024px;
+  /*background: white;*/
+}
+
+.categories_list .table_wrap{
+  padding: 0;
+}
+
+.categories_list .el-row{
+  margin-bottom: 0;
+}
+
+.measures_list .table_wrap,
+.places_list .table_wrap{
+  width: 80%;
+  padding: 0;
+  /*overflow: auto;*/
+  /*margin: auto;*/
+}

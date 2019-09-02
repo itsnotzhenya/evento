@@ -1,0 +1,34 @@
+@font-face {
+    font-family: 'Optima-BoldItalic';
+    src: url('./fonts/6660.ttf');
+}
+
+@font-face {
+    font-family: 'HoeflerText-Italic';
+    src: url('./fonts/HoeflerTextItalic.ttf')
+}
+
+@font-face {
+    font-family: 'Charkduster';
+    src: url('./fonts/Chalkduster.ttf')
+}
+
+@font-face {
+    font-family: 'PartyLENPlain';
+    src: url('./fonts/PartyLETPlain.ttf')
+}
+
+@font-face {
+    font-family: 'Roboto-Regular';
+    src: url('./fonts/Roboto-Regular.ttf')
+}
+
+@font-face {
+    font-family: 'PTBold';
+    src: url('./fonts/head-font.ttf');
+}
+
+@font-face {
+    font-family: 'Baron';
+    src: url('./fonts/title-font.ttf')
+}

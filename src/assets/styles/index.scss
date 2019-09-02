@@ -1,0 +1,177 @@
+@import "bootstrap-grid.css";
+@import "table";
+@import "product_storage";
+@import "booking";
+@import "statuses";
+@import "modal";
+@import "guests";
+@import "sidebar";
+@import "el-tree";
+@import "login";
+@import "form";
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.el-select {
+  width: 100%;
+}
+
+
+
+.container {
+  width: 90vw;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+#app {
+  height: 100%;
+}
+
+.app-wrapper {
+  height: 100%;
+  position: relative;
+  width: 100%;
+  padding-top: 70px;
+}
+
+.content-wrapper {
+  margin: 10px 25px;
+}
+
+.childWrapper {
+  margin-top: 30px;
+  padding-bottom: 100px;
+}
+
+.text {
+  &_right {
+    text-align: right;
+  }
+}
+
+.cursor {
+  &_pointer {
+    cursor: pointer;
+  }
+}
+
+#app {
+  .el-menu--horizontal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+  }
+}
+
+.el-menu-item {
+  padding: 0 !important;
+  color: #919191;
+
+  i {
+    color: #919191;
+  }
+
+  a {
+    padding: 0 20px;
+    line-height: 56px;
+    height: 60px;
+    display: block;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+}
+
+label {
+  //margin-bottom: 0;
+}
+
+.el-form--label-top .el-form-item__label {
+  padding-bottom: 0;
+}
+
+.el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: transparent;
+}
+
+.text {
+  &_right {
+    text-align: right;
+  }
+}
+
+button:focus {
+  outline: 0;
+  //outline: 5x auto -webkit-focus-ring-color;
+}
+
+.link {
+  color: #007bff;
+  text-decoration: none;
+  background-color: transparent;
+  cursor: pointer;
+  //&:hover {
+  //}
+}
+
+.body_for-print {
+  #app {
+    display: none;
+  }
+}
+
+.goods-remains_for-print, .block_for-print {
+  display: block !important;
+  position: relative;
+  top: 0;
+  z-index: 10000;
+  left: 0;
+  width: 100%;
+  right: 0;
+  background: white;
+  min-height: 100vh;
+  overflow-y: scroll;
+}
+
+.el-upload--picture-card i {
+  vertical-align: middle;
+}
+
+.form__images {
+
+  &:after {
+    clear: both;
+    content: '';
+    display: block;
+  }
+
+  &__item {
+    overflow: hidden;
+    border: 1px solid #c0ccda;
+    border-radius: 6px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 148px;
+    height: 148px;
+    margin: 0 8px 8px 0;
+    display: inline-block !important;
+    margin-bottom: 10px !important;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+}
