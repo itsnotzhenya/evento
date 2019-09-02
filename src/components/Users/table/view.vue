@@ -1,10 +1,7 @@
 <template>
-  <base-crud :module="'Users'">
+  <base-crud :action="action" create :module="'Users'">
     <template slot="crud-title">
       Пользователи
-    </template>
-    <template slot="custom-buttons">
-      <el-button @click="$router.push({ path: '/user_groups' })" type="primary">Группы пользователей</el-button>
     </template>
     <template slot="crud-content">
       <data-table
@@ -12,7 +9,7 @@
             :dataGetter="`app/users`"
             :get-data="getUsers"
             :columns="columns"
-            :actions="['edit']"
+            :actions="['edit', 'info', 'remove']"
       ></data-table>
     </template>
   </base-crud>
@@ -21,10 +18,12 @@
 <script>
 import BaseCrud from '@/components/BaseCRUD/view'
 import DataTable from '@/components/DataTable/DataTable'
+import crudMixin from '@/mixins/crudMixin'
 import roles from '@/helpers/roles'
 
 export default {
   name: 'UserTable',
+  mixins: [crudMixin],
   data: () => ({
     columns: [
        {
@@ -37,27 +36,32 @@ export default {
         filterable: true
       },
       {
-        field(row) {
-          return row.groups.map((group) => group.name).join(', ')
-        },
-        label: 'Группы'
-      },
-      {
-        field(row) {
-          return row.roles.map((role) => {
-            return roles[role]
-          }).join(', ')
-        },
-        label: 'Роли',
-        filterable: true,
-        sortable: true
-      },
-      {
-        field: 'subdivision',
-        label: 'Структурное подразделение',
-        filterable: true,
+        label: 'Город',
+        field: 'city',
         sortable: true,
-        filterField: 'Структурное подразделение'
+        filterField: 'city',
+        filterable: true
+      },
+      {
+        label: 'Email',
+        field: 'email',
+        sortable: true,
+        filterField: 'email',
+        filterable: true
+      },
+      {
+        label: 'Школа',
+        field: 'school',
+        sortable: true,
+        filterField: 'school',
+        filterable: true
+      },
+      {
+        label: 'Класс',
+        field: 'class',
+        sortable: true,
+        filterField: 'class',
+        filterable: true
       }
     ]
   }),

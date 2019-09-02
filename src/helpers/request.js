@@ -97,6 +97,9 @@ service.interceptors.response.use(
           resendPendingRequests()
         })
       }
+      if (error.response.data.detail) {
+        
+      }
       Message.error(error.response.data.detail)
 
       return new Promise((resolve, reject) => {

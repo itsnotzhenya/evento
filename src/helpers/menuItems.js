@@ -5,21 +5,11 @@
 */
 export default [
   {
-    name: 'Показатели',
+    name: 'Вопросы викторины',
     path: '/'
   },
   {
-    name: 'Управление пользователями',
+    name: 'Пользователи',
     path: '/users'
-  },
-  {
-    name: 'Управление показателями',
-    children: [
-      {
-        name: 'Сферы',
-        entityName: 'spheres',
-        childGetter: 'app/spheres'
-      }
-    ]
   }
 ]

@@ -1,6 +1,6 @@
 <template>
-  <header-view style="height: 100vh" mode="vertical" :items="items.items">
-    <h1 class="title" slot="vertical">Рейтинг ЮФУ</h1>
+  <header-view style="height: 100%" mode="vertical" :items="items.items">
+    <h1 class="title" slot="vertical">{{ title }}</h1>
   </header-view>
 </template>
 
@@ -20,6 +20,9 @@ export default {
      */
     items () {
       return this.$store.getters['menu/items']
+    },
+    title () {
+      return process.env.VUE_APP_APP_TITLE
     }
   }
 }

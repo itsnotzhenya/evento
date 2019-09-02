@@ -8,35 +8,49 @@
     :id="id"
     @save="saveUser">
     <template slot="crud-title">
-      Пользователи
+      Пользователь
     </template>
-    <template slot="custom-buttons">
+    <template v-if="action !== 'create'" slot="custom-buttons">
       <el-button
-        @click="$router.push({ path: '/portfolio', params: { id } })"
+        @click="$router.push({ path: '/answers', params: { id } })"
         type="primary">
-        Перейти в портфолио
+        Перейти к ответам
       </el-button>
     </template>
     <template slot="crud-content">
       <el-form
+        ref="form"
         :disabled="action === 'read'"
-        label-position="top"
+        label-position="left"
+        :show-message="false"
         :model="user">
         <el-row :gutter="20">
           <el-col :span="10">
-            <el-form-item prop="username" label="Имя">
-              <el-input disabled v-model="user.username"/>
+            <el-form-item prop="firstName" required label="Имя">
+              <el-input v-model="user.firstName"/>
             </el-form-item>
           </el-col>
           <el-col :span="10">
-            <el-form-item prop="subdivision" label="Структурное подразделение">
-              <el-input disabled v-model="user.subdivision"/>
+            <el-form-item prop="lastName" required label="Фамилия">
+              <el-input v-model="user.lastName"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+           <el-col :span="10">
+            <el-form-item prop="secondName" required label="Отчество">
+              <el-input v-model="user.secondName"/>
+            </el-form-item>
+          </el-col>
+           <el-col :span="10">
+            <el-form-item prop="password" :required="action === 'create'" label="Пароль">
+              <el-input type="password" v-model="user.password"/>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="10">
-            <el-form-item prop="roles" label="Роли">
+            <el-form-item prop="roles" required label="Роли">
               <el-select
                 multiple
                 v-model="user.roles">
@@ -49,20 +63,60 @@
             </el-form-item>
           </el-col>
           <el-col :span="10">
-            <el-form-item prop="groups" label="Группы">
-              <el-select
-                clearable
-                filterable
-                remote
-                multiple
-                v-model="user.groups"
-                :remote-method="getGroups">
-                <el-option
-                  v-for="group in user_groups"
-                  :key="group.id"
-                  :label="group.name"
-                  :value="group.id"/>
-              </el-select>
+            <el-form-item prop="phone" required label="Телефон">
+              <el-input v-model="user.phone"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="10">
+            <el-form-item prop="school" required label="Школа">
+              <el-input v-model="user.school" type="text"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item prop="class" required label="Класс">
+              <el-input v-model="user.class" type="text"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="10">
+            <el-form-item prop="parentPhone" required label="Телефон родителя">
+              <el-input v-model="user.parentPhone" type="text"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item prop="parentName" required label="ФИО родителя">
+              <el-input v-model="user.parentName" type="text"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="10">
+            <el-form-item prop="email" label="Email">
+              <el-input type="email" v-model="user.email"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item required prop="birthDate" label="Дата рождения">
+              <el-date-picker
+                class="date-picker"
+                v-model="user.birthDate"
+                format="dd.MM.yyyy"
+                default-value="02.09.2019"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="10">
+            <el-form-item prop="city" required label="Город">
+              <el-input v-model="user.city"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item prop="address" required label="Адрес">
+              <el-input v-model="user.address"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -75,37 +129,58 @@
 import BaseCrud from '@/components/BaseCRUD/view'
 import { rolesMap } from '@/helpers/roles'
 import crudMixin from '@/mixins/crudMixin'
+import usersApi from '@/api/users'
 
 export default {
   name: 'UsersCrud',
   data: () => ({
     user: {
       username: '',
+      city: '',
+      class: '',
+      school: '',
       roles: [],
-      groups: [],
-      subdivision: '',
+      parentName: '',
+      parentPhone: '',
+      firstName: '',
+      lastName: '',
+      secondName: '',
+      phone: '',
+      email: '',
+      secondName: '',
+      password: '',
+      address: '',
+      birthDate: new Date()
     },
-    subEntities: ['user_groups'],
+    subEntities: [],
     loading: false,
     entityName: 'users',
     mainObjectName: 'user',
-    user_groups: [],
     roles: rolesMap
   }),
   mixins: [ crudMixin ],
   components: {
     BaseCrud
   },
-
+  computed: {
+    adminIncludes () {
+      return this.user.roles.includes('ROLE_ADMIN')
+    }
+  },
   methods: {
     async saveUser(){
-      const body = { ...this.user }
-      body.groups = this.user.groups.map((group) => `api/user_groups/${group}`)
-      await this.save(this.user)
-    },
-    afterGet () {
-      this.user.groups = this.user.groups.map(group => group.id)
+      const data = { ...this.user }
+      if (data.avatar) {
+        data.avatar = `api/files/${this.user.avatar.id}`
+      }
+      await this.save(data)
     }
   }
 }
 </script>
+
+<style>
+  .date-picker {
+    width: 100% !important;
+  }
+</style>

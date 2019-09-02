@@ -11,7 +11,7 @@ export default [
     }
   },
   {
-    path: '/users/:id',
+    path: '/users/:id/show',
     component: UserCRUD,
     name: 'Users.read',
     meta: {
@@ -24,6 +24,14 @@ export default [
     name: 'Users.edit',
     meta: {
       action: 'edit'
+    }
+  },
+  {
+    path: '/users/create',
+    component: UserCRUD,
+    name: 'Users.create',
+    meta: {
+      action: 'create'
     }
   }
 ]

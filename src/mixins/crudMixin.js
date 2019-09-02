@@ -11,7 +11,9 @@ export default {
   async beforeMount () {
     this.loading = true
     await this.getItem()
-    this.afterGet()
+    if (this.afterGet) {
+      this.afterGet()
+    }
     this.subEntities.map(async (subEntity) => {
       const response = await request({
         url: `/${subEntity}`,
@@ -37,6 +39,7 @@ export default {
   },
   methods: {
     async getItem () {
+      console.log(this.$route.params)
       const { id } = this.$route.params
       this.id = +id
       if (id) {
@@ -46,23 +49,26 @@ export default {
       this.loading = false
     },
     async save (data) {
-      try {
-        this.loading = true
-        await this.$store.dispatch('app/saveEntity', {
-          id: this.id,
-          method: this.saveMethod,
-          entityName: this.entityName,
-          data
-        })
-        this.$router.push(`/${this.entityName}`)
-        this.$message.success('Успешно сохранено')
-        return true
-      } catch (error) {
-        this.$message.error(error.response.data.detail)
-        return false
-      } finally {
-        this.loading = false
-      }
+      this.$refs.form.validate(async (valid) => {
+        if (!valid) return this.$message.error('Заполните поля')
+        try {
+          this.loading = true
+          await this.$store.dispatch('app/saveEntity', {
+            id: this.id,
+            method: this.saveMethod,
+            entityName: this.entityName,
+            data
+          })
+          this.$router.push(`/${this.entityName}`)
+          this.$message.success('Успешно сохранено')
+          return true
+        } catch (error) {
+          this.$message.error(error.response.data.detail)
+          return false
+        } finally {
+          this.loading = false
+        }
+      })
     }
   }
 }

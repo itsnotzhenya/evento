@@ -2,19 +2,12 @@ import request from '@/helpers/request'
 
 export default {
   state: {
-    spheres: {},
     users: {},
     groups: {}
   },
   mutations: {
-    SET_SPHERES: (state, spheres) => {
-      state.spheres = spheres
-    },
     SET_USERS: (state, users) => {
       state.users = users
-    },
-    SET_GROUPS: (state, groups) => {
-      state.groups = groups
     }
   },
   actions: {
@@ -49,9 +42,7 @@ export default {
     }
   },
   getters: {
-    spheres: (state) => state.spheres.items,
-    users: (state) => state.users,
-    groups: (state) => state.groups
+    users: (state) => state.users
   },
   namespaced: true
 }

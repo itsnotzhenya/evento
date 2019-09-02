@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import LoginContainer from './components/Login/container'
 import userRoutes from './components/Users/routes'
-import userGroupsRoutes from './components/UserGroups/routes'
 
 Vue.use(Router)
 
@@ -18,7 +17,6 @@ export default new Router({
       path: '/login',
       component: LoginContainer
     },
-    ...userRoutes,
-    ...userGroupsRoutes
+    ...userRoutes
   ]
 })

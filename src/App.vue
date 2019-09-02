@@ -41,7 +41,6 @@ export default {
   },
   beforeMount () {
     this.$store.commit('menu/SET_MENU', { items: menuItems })
-    this.$store.dispatch('app/getEntities', { mutationName: 'SET_SPHERES', entityName: 'spheres' })
   }
 }
 </script>
