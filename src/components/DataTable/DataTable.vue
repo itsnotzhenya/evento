@@ -373,7 +373,7 @@ export default {
         params['shift.dateStart'] = this.$store.getters.dateFilterToOrder
       }
       await this.getData(params)
-      this.data = this._dictionaryMiddleware(this.dataFromStore)
+      const data = this._dictionaryMiddleware(this.dataFromStore)
       this.onNewData(data)
       this.$router.push({
         name: this.$route.name,

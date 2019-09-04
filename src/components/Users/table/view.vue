@@ -5,12 +5,12 @@
     </template>
     <template slot="crud-content">
       <data-table
-            module="Users"
-            :dataGetter="`app/users`"
-            :get-data="getUsers"
-            :delete-item="deleteUser"
-            :columns="columns"
-            :actions="['edit', 'info', 'remove']"
+          module="Users"
+          :dataGetter="`app/users`"
+          :get-data="getUsers"
+          :delete-item="deleteUser"
+          :columns="columns"
+          :actions="['edit', 'info', 'remove']"
       ></data-table>
     </template>
   </base-crud>

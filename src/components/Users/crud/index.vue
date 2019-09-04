@@ -12,7 +12,7 @@
     </template>
     <template v-if="action !== 'create'" slot="custom-buttons">
       <el-button
-        @click="$router.push({ path: '/answers', params: { id } })"
+        @click="$router.push(`/answers/${id}`)"
         type="primary">
         Перейти к ответам
       </el-button>
