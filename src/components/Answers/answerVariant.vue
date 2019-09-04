@@ -5,6 +5,7 @@
     </el-col>
     <el-col :offset="8" :span="2">
       <i class="el-icon-check correct-icon" v-if="variant.isRight"/>
+      <i class="el-icon-close not-correct-icon" v-if="notCorrectAnswer"/>
     </el-col>
   </el-row>
 </template>
@@ -24,13 +25,17 @@ export default {
     }
   },
   computed: {
-    isCorrectAnswer () {
-      return true
-    },
     borderStyle () {
-      if (!this.userAnswer)
-        return `2px solid #C6C6C6`
-      // const isUserAnswer = this.variant.id === this.userAnswer.id
+      if (this.isUserAnswer) {
+        return `2px solid ${this.variant.isRight ? '#41b883' : 'red'}`
+      }
+      return `2px solid #d3d3d3`
+    },
+    isUserAnswer () {
+      return this.variant.id === this.userAnswer.id
+    },
+    notCorrectAnswer () {
+      return this.isUserAnswer && !this.variant.isRight
     }
   }
 }
@@ -43,9 +48,17 @@ export default {
     padding: 10px;
   }
 
-  .correct-icon {
+  .correct-icon, .not-correct-icon {
     font-size: 20px;
-    color: #41b883;
     font-weight: bold;
   }
+
+  .correct-icon {
+    color: #41b883;
+  }
+
+  .not-correct-icon {
+    color: red;
+  }
+
 </style>

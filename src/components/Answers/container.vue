@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-loading="loading">
     <step-navigation
       @set-active="(a) => active = a"
       :items="steps"
@@ -9,6 +9,7 @@
       </template>
       <template slot="steps-content">
         <answers-list-test v-if="active === 0" :answers="answersForTest"/>
+        <answers-list-victorine @update-answer="updateAnswer" v-if="active === 1" :answers="answersForVictotine"/>
       </template>
     </step-navigation>
   </div>
@@ -17,7 +18,9 @@
 <script>
 import StepNavigation from '@/components/StepNavigation/view'
 import AnswersListTest from './list'
+import AnswersListVictorine from './victorine'
 import answersApi from '@/api/answers'
+import teachersApi from '@/api/teacher-answers'
 
 export default {
   name: 'AnswerContainer',
@@ -42,7 +45,8 @@ export default {
   }),
   components: {
     StepNavigation,
-    AnswersListTest
+    AnswersListTest,
+    AnswersListVictorine
   },
   async beforeMount() {
     await this.getAnswers()
@@ -50,15 +54,25 @@ export default {
   computed: {
     answersForTest () {
       return this.answers.filter(answer => answer.question.level === 1)
+    },
+    answersForVictotine () {
+      return this.answers.filter(answer => answer.question.level === 2)
     }
   },
   methods: {
-    async getAnswers() {
+    async getAnswers () {
       this.loading = true
       const response = await answersApi.index({ 'user.id': this.$route.params.id })
       this.answers = response.data.items
+      this.loading = false
+    },
+    async updateAnswer ({ id, points }) {
+      this.loading = true
+      const data = { points }
+      await teachersApi.put(id, { ...data })
+      this.loading = false
     }
-  }
+   }
 }
 </script>
 

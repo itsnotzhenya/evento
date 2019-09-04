@@ -1,5 +1,5 @@
 <template>
-  <header-view style="height: 100%" mode="vertical" :items="items.items">
+  <header-view style="min-height: 100vh; height: 100%" mode="vertical" :items="items.items">
     <h1 class="title" slot="vertical">{{ title }}</h1>
   </header-view>
 </template>

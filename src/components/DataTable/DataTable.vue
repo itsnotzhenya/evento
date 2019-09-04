@@ -374,7 +374,7 @@ export default {
       }
       await this.getData(params)
       const data = this._dictionaryMiddleware(this.dataFromStore)
-      this.onNewData(data)
+      this.onNewData(this.dataFromStore)
       this.$router.push({
         name: this.$route.name,
         query: {
