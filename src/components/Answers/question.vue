@@ -6,7 +6,7 @@
       </el-col>
       <el-col v-if="userAnswer" :span="20">
         <el-row :gutter="20" style="width: 600px;">
-          <el-col v-for="variant in question.answers" :key="`variant_${variant.id}`" :span="12">
+          <el-col v-for="variant in question.answers" :key="`variant_${variant.id}`" :span="14">
             <answer-variant :variant="variant" :user-answer="userAnswer"/>
           </el-col>
         </el-row>
