@@ -3,11 +3,15 @@ import request from '@/helpers/request'
 export default {
   state: {
     users: {},
-    groups: {}
+    groups: {},
+    questions: {}
   },
   mutations: {
     SET_USERS: (state, users) => {
       state.users = users
+    },
+    SET_QUESTIONS: (state, questions) => {
+      state.questions = questions
     }
   },
   actions: {
@@ -42,7 +46,8 @@ export default {
     }
   },
   getters: {
-    users: (state) => state.users
+    users: (state) => state.users,
+    questions: (state) => state.questions
   },
   namespaced: true
 }

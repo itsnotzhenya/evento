@@ -46,7 +46,7 @@ export default {
       type: Boolean,
       default: false
     },
-     /**
+    /**
      * @prop {boolean} edit - возможность редактировать сущность
      */
     edit: {
@@ -64,7 +64,7 @@ export default {
      * @prop {string} action - действие, совершаемое над сущностью
      */
     action: {
-      type: String,
+      type: String
     },
     /**
      * @prop {string} module - модуль, для которого создается круд

@@ -150,11 +150,11 @@ import defaultType from './types/default'
 import diacriticless from 'diacriticless'
 
 let dataTypes = {}
-  let coreDataTypes = require.context('./types', false, /^\.\/([\w-_]+)\.js$/)
-  forEach(coreDataTypes.keys(), (key) => {
-  let compName = key.replace(/^\.\//, '').replace(/\.js/, '');
+let coreDataTypes = require.context('./types', false, /^\.\/([\w-_]+)\.js$/)
+forEach(coreDataTypes.keys(), (key) => {
+  let compName = key.replace(/^\.\//, '').replace(/\.js/, '')
   dataTypes[compName] = coreDataTypes(key).default
-  });
+})
 
 export default {
   name: 'vue-good-table',
@@ -219,30 +219,30 @@ export default {
         currentPage: this.currentPage,
         currentPerPage: this.currentPerPage,
         total: Math.floor(this.rows.length / this.currentPerPage)
-      };
+      }
     },
 
     pageChanged (pagination) {
       this.currentPage = pagination.currentPage
-        const pageChangedEvent = this.pageChangedEvent()
-        this.$emit('pageChanged', pageChangedEvent)
-      },
+      const pageChangedEvent = this.pageChangedEvent()
+      this.$emit('pageChanged', pageChangedEvent)
+    },
 
     perPageChanged (pagination) {
       this.currentPerPage = pagination.currentPerPage
-        const perPageChangedEvent = this.pageChangedEvent()
-        this.$emit('perPageChanged', perPageChangedEvent)
-      },
+      const perPageChangedEvent = this.pageChangedEvent()
+      this.$emit('perPageChanged', perPageChangedEvent)
+    },
 
     sort (index) {
       if (!this.isSortableColumn(index))
-        return;
+        {return;}
       if (this.sortColumn === index) {
         this.sortType = this.sortType === 'asc' ? 'desc' : 'asc'
-        } else {
+      } else {
         this.sortType = 'asc'
-          this.sortColumn = index
-        }
+        this.sortColumn = index
+      }
       //        console.log(this.sortType)
       //        console.log(this.columns[this.sortColumn])
       this.$emit('on-sort', this.columns[this.sortColumn], this.sortType)
@@ -251,14 +251,14 @@ export default {
 
     click (row, index) {
       if (this.onClick)
-        this.onClick(row, index)
-      },
+        {this.onClick(row, index)}
+    },
 
     searchTable () {
       if (this.searchTrigger == 'enter') {
         this.forceSearch = true
-          this.sortChanged = true
-        }
+        this.sortChanged = true
+      }
     },
 
     // field can be:
@@ -266,57 +266,57 @@ export default {
     // 2. regular property - ex: 'prop'
     // 3. nested property path - ex: 'nested.prop'
     collect (obj, field) {
-        // utility function to get nested property
+      // utility function to get nested property
       function dig (obj, selector) {
         let result = obj
-          const splitter = selector.split('.')
-          for (let i = 0; i < splitter.length; i++)
-          if (typeof (result) === 'undefined')
+        const splitter = selector.split('.')
+        for (let i = 0; i < splitter.length; i++)
+          {if (typeof (result) === 'undefined')
             return undefined
             else
-            result = result[splitter[i]]
-          return result
-        }
+            result = result[splitter[i]]}
+        return result
+      }
 
       if (typeof (field) === 'function')
-        return field(obj)
-        else if (typeof (field) === 'string')
-        return dig(obj, field)
-        else
-        return undefined
-      },
+        {return field(obj)}
+      else if (typeof (field) === 'string')
+        {return dig(obj, field)}
+      else
+        {return undefined}
+    },
 
     collectFormatted (obj, column) {
       let value = this.collect(obj, column.field)
 
-        if (value === undefined) return ''
-        //lets format the resultant data
-        let type = column.typeDef
+      if (value === undefined) return ''
+      // lets format the resultant data
+      let type = column.typeDef
       return type.format(value, column)
-      },
+    },
 
     formattedRow (row) {
       let formattedRow = {}
-        for (const col of this.typedColumns) {
+      for (const col of this.typedColumns) {
         if (col.field) {
           formattedRow[col.field] = this.collectFormatted(row, col)
-          }
+        }
       }
       return formattedRow
-      },
+    },
 
     // Check if a column is sortable.
     isSortableColumn (index) {
       if (!this.columns[index].sortable) return false
       const sortable = this.columns[index].sortable
-        const isSortable = typeof sortable === 'boolean' ? sortable : this.sortable
-        return isSortable
-      },
+      const isSortable = typeof sortable === 'boolean' ? sortable : this.sortable
+      return isSortable
+    },
 
     // Get classes for the given header column.
     getHeaderClasses (column, index) {
       const isSortable = this.isSortableColumn(index)
-        let sortingClasses = {}
+      let sortingClasses = {}
 
       if (column.sortable) {
         sortingClasses = {
@@ -327,26 +327,26 @@ export default {
       }
 
       const classes = Object.assign({}, this.getClasses(index, 'th'), sortingClasses)
-        return classes
-      },
+      return classes
+    },
 
     // Get classes for the given column index & element.
     getClasses (index, element, column) {
       const { typeDef, [element + 'Class']: custom } = this.typedColumns[index]
-        let isRight = typeDef.isRight
-        if (this.rtl) isRight = true
-        let classes = {
+      let isRight = typeDef.isRight
+      if (this.rtl) isRight = true
+      let classes = {
         'right-align': isRight,
         'left-align': !isRight,
         [custom]: !!custom
-      };
+      }
 
       if (element === 'td' && column) {
         classes = { ...classes, ...column.cellClasses }
       }
 
       return classes
-      },
+    },
 
     // since vue doesn't detect property addition and deletion, we
     // need to create helper function to set property etc
@@ -367,14 +367,14 @@ export default {
     filterRows () {
       //        console.log('filter')
       let computedRows = this.filteredRows = this.originalRows
-//        console.log(computedRows)
-//        return computedRows
-        return
+      //        console.log(computedRows)
+      //        return computedRows
+      return
       if (this.hasFilterRow) {
         for (let col of this.typedColumns) {
           if (col.filterable && this.columnFilters[col.field]) {
             computedRows = computedRows.filter(row => {
-                // If column has a custom filter, use that.
+              // If column has a custom filter, use that.
               if (col.filter) {
                 return col.filter(this.collect(row, col.field), this.columnFilters[col.field])
               } else {
@@ -383,11 +383,11 @@ export default {
                 return typeDef.filterPredicate(this.collect(row, col.field), this.columnFilters[col.field])
               }
             })
-            }
+          }
         }
       }
       this.filteredRows = computedRows
-      },
+    },
 
     // get column's defined placeholder or default one
     getPlaceholder (column) {
@@ -397,35 +397,35 @@ export default {
 
     getCurrentIndex (index) {
       return (this.currentPage - 1) * this.currentPerPage + index + 1
-      },
+    },
 
     getRowStyleClass (row) {
       let classes = ''
-        this.onClick ? classes += 'clickable' : ''
-        let rowStyleClasses
-        if (typeof this.rowStyleClass === 'function') {
+      this.onClick ? classes += 'clickable' : ''
+      let rowStyleClasses
+      if (typeof this.rowStyleClass === 'function') {
         rowStyleClasses = this.rowStyleClass(row)
-        } else {
+      } else {
         rowStyleClasses = this.rowStyleClass
-        }
+      }
       if (rowStyleClasses) {
         classes += ' ' + rowStyleClasses
-        }
-      return classes
       }
+      return classes
+    }
   },
 
   watch: {
     columnFilters: {
       handler: function () {
         this.filterRows()
-        },
+      },
       deep: true
     },
     rows: {
       handler: function () {
         this.filterRows()
-        },
+      },
       deep: true
     }
 
@@ -433,31 +433,31 @@ export default {
   computed: {
     tableStyleClasses () {
       let classes = this.styleClass
-        classes += this.responsive ? ' responsive' : ''
-        return classes
-      },
+      classes += this.responsive ? ' responsive' : ''
+      return classes
+    },
     searchTerm () {
       return (this.externalSearchQuery != null) ? this.externalSearchQuery : this.globalSearchTerm
-      },
+    },
     globalSearchAllowed () {
       if (this.globalSearch &&
           !!this.globalSearchTerm &&
           this.searchTrigger != 'enter') {
         return true
-        }
+      }
 
       if (this.externalSearchQuery != null &&
           this.searchTrigger != 'enter') {
         return true
-        }
+      }
 
       if (this.forceSearch) {
         this.forceSearch = false
-          return true
-        }
+        return true
+      }
 
       return false
-      },
+    },
 
     // to create a filter row, we need to
     // make sure that there is atleast 1 column
@@ -467,11 +467,11 @@ export default {
         for (let col of this.columns) {
           if (col.filterable) {
             return true
-            }
+          }
         }
       }
       return false
-      },
+    },
 
     // this is done everytime sortColumn
     // or sort type changes
@@ -479,15 +479,15 @@ export default {
     processedRows () {
       let computedRows = this.filteredRows
 
-        // take care of the global filter here also
-        if (this.globalSearchAllowed) {
+      // take care of the global filter here also
+      if (this.globalSearchAllowed) {
         let filteredRows = []
-          for (let row of this.originalRows) {
+        for (let row of this.originalRows) {
           for (let col of this.columns) {
-              // if col has search disabled,
+            // if col has search disabled,
             // skip the column.
             if (col.globalSearchDisabled) {
-              continue;
+              continue
             }
 
             // if a search function is provided,
@@ -499,31 +499,31 @@ export default {
                 col,
                 this.collectFormatted(row, col),
                 this.searchTerm)
-                if (foundMatch) {
+              if (foundMatch) {
                 filteredRows.push(row)
-                  break;
+                break;
               }
             } else {
               // lets get the formatted row/col value
               let tableValue = this.collectFormatted(row, col)
-                if (typeof (tableValue) !== 'undefined' && tableValue !== null) {
+              if (typeof (tableValue) !== 'undefined' && tableValue !== null) {
                 // table value
                 tableValue = diacriticless(String(tableValue).toLowerCase())
 
-                  // search term
-                  let searchTerm = diacriticless(this.searchTerm.toLowerCase())
+                // search term
+                let searchTerm = diacriticless(this.searchTerm.toLowerCase())
 
-                  // comparison
-                  if (tableValue.search(searchTerm) > -1) {
+                // comparison
+                if (tableValue.search(searchTerm) > -1) {
                   filteredRows.push(row)
-                    break;
+                  break;
                 }
               }
             }
           }
         }
         computedRows = filteredRows
-        }
+      }
 
       // taking care of sort here only if sort has changed
       //        if (this.sortColumn !== -1 && this.isSortableColumn(this.sortColumn) &&
@@ -559,53 +559,53 @@ export default {
       // rows
       if (this.searchTrigger === 'enter') {
         this.filteredRows = computedRows
-        }
+      }
 
       return computedRows
-      },
+    },
 
     paginated () {
       let paginatedRows = this.processedRows
 
-        if (this.paginate) {
+      if (this.paginate) {
         let pageStart = (this.currentPage - 1) * this.currentPerPage
 
-          // in case of filtering we might be on a page that is
-          // not relevant anymore
-          // also, if setting to all, current page will not be valid
-          if (pageStart >= this.processedRows.length ||
+        // in case of filtering we might be on a page that is
+        // not relevant anymore
+        // also, if setting to all, current page will not be valid
+        if (pageStart >= this.processedRows.length ||
             this.currentPerPage === -1) {
           this.currentPage = 1
-            pageStart = 0
-          }
+          pageStart = 0
+        }
 
         // calculate page end now
         let pageEnd = paginatedRows.length + 1
 
-          //if the setting is set to 'all'
-          if (this.currentPerPage !== -1) {
+        // if the setting is set to 'all'
+        if (this.currentPerPage !== -1) {
           pageEnd = this.currentPage * this.currentPerPage
-          }
+        }
 
         paginatedRows = paginatedRows.slice(pageStart, pageEnd)
-        }
+      }
       return paginatedRows
-      },
+    },
 
     originalRows () {
       const rows = JSON.parse(JSON.stringify(this.rows))
 
-        // we need to preserve the original index of rows so lets do that
-        for (let index = 0; index < rows.length; index++) {
+      // we need to preserve the original index of rows so lets do that
+      for (let index = 0; index < rows.length; index++) {
         rows[index].originalIndex = index
-        }
+      }
 
       return rows
-      },
+    },
 
     typedColumns () {
       const columns = Object.assign(this.columns, [])
-        for (let column of columns) {
+      for (let column of columns) {
         column.typeDef = this.dataTypes[column.type] || defaultType
       }
       return columns
@@ -615,9 +615,9 @@ export default {
   mounted () {
     this.filteredRows = this.originalRows
 
-      if (this.perPage) {
+    if (this.perPage) {
       this.currentPerPage = this.perPage
-      }
+    }
 
     this.filterParams = this.filterPreset
 
@@ -643,9 +643,9 @@ export default {
         let col = this.columns[index]
         if (col.field === this.defaultSortBy.field) {
           this.sortColumn = index
-            this.sortType = this.defaultSortBy.type || 'asc'
-            this.sortChanged = true
-            break;
+          this.sortType = this.defaultSortBy.type || 'asc'
+          this.sortChanged = true
+          break;
         }
       }
     }

@@ -56,7 +56,7 @@ export default {
     AnswersListVictorine,
     Awards
   },
-  async beforeMount() {
+  async beforeMount () {
     this.loading = true
     await this.getAnswers()
     await this.getMedals()
@@ -89,7 +89,7 @@ export default {
       const response = await medalsApi.index()
       this.medals = response.data.items
     },
-    async getAchievement() {
+    async getAchievement () {
       const response = await achievementApi.index({ 'user.id': this.userId })
       const [ data ] = response.data.items
       if (data) {
@@ -97,10 +97,10 @@ export default {
         this.achievement = response.data.items[0]
       }
     },
-    updateAchievement({ data, field }) {
+    updateAchievement ({ data, field }) {
       this.achievement[field] = data
     },
-    async saveAchievement() {
+    async saveAchievement () {
       this.loading = true
       try {
         const data = {
@@ -116,7 +116,7 @@ export default {
         this.loading = false
       }
     }
-   }
+  }
 }
 </script>
 

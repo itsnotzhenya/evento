@@ -10,7 +10,6 @@
   </el-row>
 </template>
 
-
 <script>
 export default {
   name: 'AnswerVariant',

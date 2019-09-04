@@ -33,7 +33,7 @@ export default (resourseName, getResourseModel = null) => ({
     return request({
       method: 'get',
       url: `/${getResourseModel || resourseName}`,
-      params
+      params: { ...params, deleted: false }
     })
   }
 })

@@ -34,7 +34,7 @@ export default {
     userAnswer: {
       type: Object,
       default: () => {}
-    },
+    }
   }
 }
 </script>

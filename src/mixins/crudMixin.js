@@ -48,6 +48,12 @@ export default {
       }
       this.loading = false
     },
+    async getEntities (method, entityName, params = {}) {
+      this.loading = true
+      const response = await method(params)
+      this[entityName] = response.data.items
+      this.loading = false
+    },
     async save (data) {
       this.$refs.form.validate(async (valid) => {
         if (!valid) return this.$message.error('Заполните поля')

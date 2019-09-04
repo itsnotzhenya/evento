@@ -6,7 +6,7 @@
 export default [
   {
     name: 'Вопросы викторины',
-    path: '/'
+    path: '/questions'
   },
   {
     name: 'Пользователи',

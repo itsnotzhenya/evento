@@ -168,7 +168,7 @@ export default {
     }
   },
   methods: {
-    async saveUser(){
+    async saveUser () {
       const data = { ...this.user }
       if (data.avatar) {
         data.avatar = `api/files/${this.user.avatar.id}`

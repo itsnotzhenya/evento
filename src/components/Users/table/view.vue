@@ -28,8 +28,8 @@ export default {
   mixins: [crudMixin],
   data: () => ({
     columns: [
-       {
-        field(row) {
+      {
+        field (row) {
           return row.firstName + ' ' + row.lastName
         },
         label: 'Имя пользователя',
@@ -81,7 +81,7 @@ export default {
         }
       )
     },
-    async deleteUser(id) {
+    async deleteUser (id) {
       await usersApi.delete(id)
     }
   }

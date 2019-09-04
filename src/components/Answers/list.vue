@@ -15,7 +15,6 @@
 import QuestionView from './question'
 import pointsMixin from '@/mixins/pointsForAnswers'
 
-
 export default {
   name: 'AnswerList',
   mixins: [
