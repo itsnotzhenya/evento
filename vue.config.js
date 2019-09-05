@@ -1,7 +1,7 @@
 const { env } = process
 
 module.exports = {
-  publicPath: env.NODE_ENV === 'production' ? './' : '/',
+  publicPath: env.NODE_ENV === 'production' ? '/admin' : '/',
   devServer: {
     port: 8080,
     host: env.VUE_APP_HOST,
