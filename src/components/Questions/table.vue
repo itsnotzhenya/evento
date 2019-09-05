@@ -29,12 +29,19 @@ export default {
     columns: [
       {
         field (row) {
-          return row.name.length > 80 ? `${row.name.slice(0, 80)}...` : row.name
+          return row.name.length > 60 ? `${row.name.slice(0, 60)}...` : row.name
         },
         label: 'Текст вопроса',
         sortable: true,
         filterField: 'name',
         filterable: true
+      },
+      {
+        field: 'variant.name',
+        label: 'Вариант',
+        sortable: true,
+        filterField: 'variant.name',
+        filterable: true,
       },
       {
         field (row) {
