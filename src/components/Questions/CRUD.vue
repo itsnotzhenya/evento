@@ -87,7 +87,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row v-if="isTest && !loading">
+        <el-row v-loading="questionLoading" v-if="isTest && !loading">
           <question-variants
             @set-right-variant="setRightVariant"
             @add-variant="addVariant"
@@ -121,6 +121,7 @@ export default {
       message: '',
       number: 1
     },
+    questionLoading: false,
     entityName: 'questions',
     mainObjectName: 'question',
     variants: [],
@@ -153,7 +154,7 @@ export default {
       const data = { ...this.question }
       const answers = [ ...this.answerVariants ]
       data.answers = answers.map(answer => `api/answers/${answer.id}`)
-      data.picture = `api/files/${this.question.picture.id}`
+      data.picture = this.question.picture && this.question.picture.id ? `api/files/${this.question.picture.id}` : null
       data.variant = `api/variants/${this.question.variant}`
       await this.save(data)
     },
@@ -173,6 +174,7 @@ export default {
       this.answerVariants.push(response.data)
     },
     async setRightVariant({ id }) {
+      this.questionLoading = true
       const rightVariant = this.answerVariants.filter(variant => variant.isRight)
       if (rightVariant.length > 0) {
         const notRight = rightVariant.find(({ id: variantId }) => variantId !== id)
@@ -182,6 +184,7 @@ export default {
       const currentVariant = this.answerVariants.find(variant => variant.id === id)
       currentVariant.isRight = true
       await answersApi.put(currentVariant.id, { isRight: true })
+      this.questionLoading = false
     }
   }
 }
