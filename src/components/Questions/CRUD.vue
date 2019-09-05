@@ -149,7 +149,7 @@ export default {
   },
   methods: {
     async saveQuestion () {
-      if (!this.answerVariants.length && thus.level === 1) { return this.$message.error('Добавьте варианты ответа') }
+      if (!this.answerVariants.length && this.isTest) { return this.$message.error('Добавьте варианты ответа') }
       const data = { ...this.question }
       const answers = [ ...this.answerVariants ]
       data.answers = answers.map(answer => `api/answers/${answer.id}`)
