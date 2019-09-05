@@ -1,0 +1,47 @@
+variables:
+  DEV_USER: ci
+  DEV_HOST: 193.124.188.185
+  DEV_FOLDER: /var/www/league/admin
+  PRIVATE_KEY: /tmp/id_rsa_$CI_COMMIT_SHA
+
+before_script:
+  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  script:
+    - docker run --rm -v $(pwd):/src -v /tmp/.cache/yarn_cache:/root/.cache/yarn/ gitlab.webant.ru:5001/imake/imake-admin/builder:latest
+  artifacts:
+    paths:
+      - dist
+  only:
+    - dev
+  tags:
+    - docker-shell
+
+upload to dev:
+  stage: deploy
+  dependencies:
+    - build
+  script:
+    - scp -i $PRIVATE_KEY -P 2011 -r dist/* $DEV_USER@$DEV_HOST:$DEV_FOLDER
+    - ssh -i $PRIVATE_KEY $DEV_USER@$DEV_HOST -p2011 "
+        cd /var/www/tizer;
+        docker-compose --verbose down;
+        docker-compose --verbose up -d;
+        docker ps -a;
+      "
+  only:
+    - dev
+  tags:
+    - docker-shell
+  before_script:
+    - echo "$PRIVATE_SSH_KEY" > $PRIVATE_KEY
+    - chmod 700 $PRIVATE_KEY
+  after_script:
+    - rm $PRIVATE_KEY
+
