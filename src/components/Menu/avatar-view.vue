@@ -6,7 +6,7 @@
         trigger="click"
         v-if="userInfo">
         <div style="font-size: 18px;" class="avatar-wrapper">
-            {{userInfo.username}}
+            {{userInfo.firstName}}
         <i class="el-icon-caret-bottom"></i>
         </div>
         <el-dropdown-menu slot="dropdown">
