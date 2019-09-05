@@ -178,8 +178,11 @@ export default {
       const rightVariant = this.answerVariants.filter(variant => variant.isRight)
       if (rightVariant.length > 0) {
         const notRight = rightVariant.find(({ id: variantId }) => variantId !== id)
-        notRight.isRight = false
-        await answersApi.put(notRight.id, { isRight: false })
+        if (notRight) {
+          notRight.isRight = false
+          await answersApi.put(notRight.id, { isRight: false })
+        }
+
       }
       const currentVariant = this.answerVariants.find(variant => variant.id === id)
       currentVariant.isRight = true
