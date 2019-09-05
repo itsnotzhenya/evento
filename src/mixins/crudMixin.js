@@ -69,7 +69,7 @@ export default {
           this.$message.success('Успешно сохранено')
           return true
         } catch (error) {
-          // this.$message.error(error.response.data.detail)
+          this.$message.error(error.response.data.detail)
           return false
         } finally {
           this.loading = false

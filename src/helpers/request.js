@@ -104,9 +104,9 @@ service.interceptors.response.use(
         requestQueue.push({ resolve, reject, config: error.config })
       })
     }
-    if (error.response && error.response.data.detail) {
-      Message.error(error.response.data.detail)
-    }
+    // if (error.response && error.response.data.detail) {
+    //   Message.error(error.response.data.detail)
+    // }
 
     return new Promise((resolve, reject) => {
       reject(error)
