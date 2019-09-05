@@ -37,7 +37,9 @@ export default {
         filterable: true
       },
       {
-        field: 'variant.name',
+        field (row) {
+          return row.variant ? row.variant.name : ''
+        },
         label: 'Вариант',
         sortable: true,
         filterField: 'variant.name',
