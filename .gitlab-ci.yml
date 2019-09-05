@@ -30,7 +30,7 @@ upload to dev:
   script:
     - scp -i $PRIVATE_KEY -P 2011 -r dist/* $DEV_USER@$DEV_HOST:$DEV_FOLDER
     - ssh -i $PRIVATE_KEY $DEV_USER@$DEV_HOST -p2011 "
-        cd /var/www/tizer;
+        cd $DEV_FOLDER;
         docker-compose --verbose down;
         docker-compose --verbose up -d;
         docker ps -a;
