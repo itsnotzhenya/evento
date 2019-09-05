@@ -13,7 +13,7 @@ export default [
   {
     path: '/users/:id/show',
     component: UserCRUD,
-    name: 'Users.read',
+    name: 'Users.info',
     meta: {
       action: 'read'
     }
