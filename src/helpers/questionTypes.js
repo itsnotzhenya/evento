@@ -5,6 +5,6 @@ export default [
   },
   {
     name: 'Викторина',
-    level: 0
+    level: 2
   }
 ]

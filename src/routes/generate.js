@@ -34,7 +34,8 @@ export default ({ moduleName, path, ListComponent, CRUDComponent, parentModule }
     component: ListComponent,
     name: `${moduleName}.list`,
     meta: {
-      parentModule
+      parentModule,
+      action: 'list'
     }
   }
 ])

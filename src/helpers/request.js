@@ -97,20 +97,20 @@ service.interceptors.response.use(
           resendPendingRequests()
         })
       }
-      if (error.response && error.response.data.detail) {
-        Message.error(error.response.data.detail)
-      }
 
       return new Promise((resolve, reject) => {
         lastRequest.resolve = resolve
         lastRequest.reject = reject
         requestQueue.push({ resolve, reject, config: error.config })
       })
-    } else {
-      return new Promise((resolve, reject) => {
-        reject(error)
-      })
     }
+    if (error.response && error.response.data.detail) {
+      Message.error(error.response.data.detail)
+    }
+
+    return new Promise((resolve, reject) => {
+      reject(error)
+    })
   })
 
 export default serviceDecorator

@@ -1,5 +1,5 @@
 <template>
-  <base-crud :action="action" create :module="'Users'">
+  <base-crud :action="action" create :module="'Question'">
     <template slot="crud-title">
       Вопросы
     </template>
