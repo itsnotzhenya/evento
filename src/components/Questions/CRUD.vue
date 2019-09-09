@@ -89,6 +89,7 @@
         </el-row>
         <el-row v-loading="questionLoading" v-if="isTest && !loading">
           <question-variants
+            @delete-variant="deleteVariant"
             @set-right-variant="setRightVariant"
             @add-variant="addVariant"
             :variants="answerVariants"/>
@@ -172,6 +173,10 @@ export default {
     async addVariant({ name }) {
       const response = await answersApi.post({ name })
       this.answerVariants.push(response.data)
+    },
+    async deleteVariant ({ id }) {
+      await variantsApi.delete(id)
+      this.answerVariants.splice(this.answerVariants.findIndex(({ id: answerId }) => answerId === id), 1)
     },
     async setRightVariant({ id }) {
       this.questionLoading = true
