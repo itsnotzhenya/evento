@@ -170,8 +170,9 @@ export default {
   methods: {
     async saveUser () {
       const data = { ...this.user }
-      if (data.avatar) {
+      if (data.id) {
         data.avatar = `api/files/${this.user.avatar.id}`
+        data.achievement = data.achievement ? `api/achievements/${this.user.achievement.id}` : null
       }
       await this.save(data)
     }
