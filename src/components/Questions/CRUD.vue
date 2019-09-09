@@ -72,14 +72,14 @@
               <el-input-number :min="1" v-model="question.number"/>
             </el-form-item>
           </el-col>
-          <el-col v-if="isTest" :span="12">
+          <el-col :span="12">
              <el-form-item label="Загрузите медиа-файл" prop="picture">
                 <el-upload
                     :disabled="loading"
                     :on-change="(file, filelist) => handleChange(file.raw, filelist)"
                     action="undefined"
                     >
-                    <div style="display: flex; flex-direction: column">
+                    <div class="picture">
                       <img width="300" v-if="question.picture && question.picture.path" :src="`/uploads/${question.picture.path}`" alt/>
                       <el-button style="margin-top: 20px;" type="primary">Добавить файл</el-button>
                     </div>
@@ -192,3 +192,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.picture {
+  display: flex;
+  flex-direction: column
+}
+</style>
