@@ -12,10 +12,11 @@
       <el-table-column
         prop="question.name"
         label="Текст вопроса"
-        width="800">
+        width="600">
       </el-table-column>
       <el-table-column
-        label="Ответ ученика">
+        label="Ответ ученика"
+        width="550">
         <template slot-scope="scope">
           <span v-if="scope.row.textAnswer.length">
             {{ scope.row.textAnswer }}
@@ -27,6 +28,7 @@
       </el-table-column>
       <el-table-column
         label="Баллы за вопрос"
+        width="300"
       >
         <template slot-scope="scope">
           <el-input-number
