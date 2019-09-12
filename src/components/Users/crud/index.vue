@@ -120,6 +120,20 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <el-row :gutter="20">
+          <el-col :span="10">
+            <el-form-item prop="userType" required label="Трек">
+              <el-select v-model="user.userType">
+                <el-option
+                  v-for="track in tracks"
+                  :label="track.name"
+                  :key="track.value"
+                  :value="track.value"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
     </template>
   </base-crud>
@@ -128,6 +142,7 @@
 <script>
 import BaseCrud from '@/components/BaseCRUD/view'
 import { rolesMap } from '@/helpers/roles'
+import trackMap from '@/helpers/tracks'
 import crudMixin from '@/mixins/crudMixin'
 import usersApi from '@/api/users'
 
@@ -150,13 +165,15 @@ export default {
       secondName: '',
       password: '',
       address: '',
-      birthDate: new Date()
+      birthDate: new Date(),
+      userType: null
     },
     subEntities: [],
     loading: false,
     entityName: 'users',
     mainObjectName: 'user',
-    roles: rolesMap
+    roles: rolesMap,
+    tracks: trackMap
   }),
   mixins: [ crudMixin ],
   components: {

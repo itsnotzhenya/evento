@@ -175,7 +175,7 @@ export default {
       this.answerVariants.push(response.data)
     },
     async deleteVariant ({ id }) {
-      await variantsApi.delete(id)
+      await   variantsApi.delete(id)
       this.answerVariants.splice(this.answerVariants.findIndex(({ id: answerId }) => answerId === id), 1)
     },
     async setRightVariant({ id }) {
