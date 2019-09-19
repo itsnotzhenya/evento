@@ -68,4 +68,7 @@ export default {
     .user-form {
       margin-top: 20px  ;
     }
+    img {
+      max-width: 80%;
+    }
 </style>
