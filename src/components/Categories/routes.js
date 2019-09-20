@@ -1,10 +1,10 @@
-import UserCRUD from './crud/index'
-import UserTable from './table/view'
+import CategoryCRUD from './CRUD'
+import CategoryTable from './table'
 
 export default [
   {
     path: '/users',
-    component: UserTable,
+    component: CategoryTable,
     name: 'Users.list',
     meta: {
       action: 'list',
@@ -13,7 +13,7 @@ export default [
   },
   {
     path: '/users/:id/show',
-    component: UserCRUD,
+    component: CategoryCRUD,
     name: 'Users.info',
     meta: {
       action: 'read',
@@ -22,7 +22,7 @@ export default [
   },
   {
     path: '/users/:id/edit',
-    component: UserCRUD,
+    component: CategoryCRUD,
     name: 'Users.edit',
     meta: {
       action: 'edit',
@@ -31,7 +31,7 @@ export default [
   },
   {
     path: '/users/create',
-    component: UserCRUD,
+    component: CategoryCRUD,
     name: 'Users.create',
     meta: {
       action: 'create',

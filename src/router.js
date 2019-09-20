@@ -1,9 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import LoginContainer from './components/Login/container'
-import AnswerContainer from './components/Answers/container'
 import userRoutes from './components/Users/routes'
-import questionRoutes from './routes/questions'
 
 Vue.use(Router)
 
@@ -19,11 +17,6 @@ export default new Router({
       path: '/login',
       component: LoginContainer
     },
-    {
-      path: '/answers/:id',
-      component: AnswerContainer
-    },
-    ...userRoutes,
-    ...questionRoutes
+    ...userRoutes
   ]
 })

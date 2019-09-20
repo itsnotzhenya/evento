@@ -39,10 +39,10 @@ export default {
   },
   methods: {
     async getItem () {
-      console.log(this.$route.params)
       const { id } = this.$route.params
       this.id = +id
       if (id) {
+        console.log(this)
         const response = await this.$store.dispatch('app/getItem', { id, entityName: this.entityName })
         this[this.mainObjectName] = response.data
       }

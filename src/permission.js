@@ -9,9 +9,7 @@ function hasPermission (roles, permissionRoles) {
   return roles.some(role => permissionRoles.indexOf(role) >= 0)
 }
 
-const whiteList = [
-  '/login'
-]
+const whiteList = ['/login']
 
 router.beforeEach((to, _, next) => {
   if (getToken()) {
@@ -19,15 +17,21 @@ router.beforeEach((to, _, next) => {
       next({ path: '/' })
     } else {
       if (store.getters['users/roles'].length === 0) {
-        store.dispatch('users/GetUserInfo').then(() => {
-          next({ ...to })
-        }).catch(err => {
-          next('/login')
-          if (err.response && err.response.status === 403) {
-            Message.error('Отказано в доступе')
-          }
-          throw err
-        })
+        store
+          .dispatch('users/GetUserInfo')
+          .then(() => {
+            next({ ...to })
+          })
+          .catch(err => {
+            next('/login')
+            if (
+              err.response &&
+              (err.response.status === 403 || err.response.status === 401)
+            ) {
+              Message.error('Отказано в доступе')
+            }
+            throw err
+          })
       } else {
         if (hasPermission(store.getters['users/roles'], to.meta.role)) {
           next()

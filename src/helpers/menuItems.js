@@ -5,11 +5,15 @@
 */
 export default [
   {
-    name: 'Вопросы викторины',
-    path: '/questions'
-  },
-  {
     name: 'Пользователи',
     path: '/users'
+  },
+  {
+    name: 'Категории',
+    path: '/category'
+  },
+  {
+    name: 'Заявки',
+    path: '/questions'
   }
 ]
