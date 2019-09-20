@@ -1,4 +1,4 @@
-FROM node:10-alpine as tizer_admin
+FROM node:10-alpine as dupon_predictions_admin
 
 WORKDIR /src
 

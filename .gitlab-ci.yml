@@ -1,7 +1,7 @@
 variables:
   DEV_USER: ci
-  DEV_HOST: 193.124.188.185
-  DEV_FOLDER: /var/www/league/admin
+  DEV_HOST: 207.246.94.5
+  DEV_FOLDER: /var/www/dupon-predictions/admin
   PRIVATE_KEY: /tmp/id_rsa_$CI_COMMIT_SHA
 
 before_script:
@@ -14,7 +14,7 @@ stages:
 build:
   stage: build
   script:
-    - docker run --rm -v $(pwd):/src -v /tmp/.cache/yarn_cache:/root/.cache/yarn/ gitlab.webant.ru:5001/imake/imake-admin/builder:latest
+    - docker run --rm -v $(pwd):/src -v /tmp/.cache/yarn_cache:/root/.cache/yarn/ gitlab.webant.ru:5001/dupon/dupon-prediction-admin/builder:latest
   artifacts:
     paths:
       - dist
