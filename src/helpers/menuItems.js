@@ -10,7 +10,7 @@ export default [
   },
   {
     name: 'Категории',
-    path: '/category'
+    path: '/categories'
   },
   {
     name: 'Заявки',
