@@ -34,11 +34,33 @@ export default {
         filterable: true
       },
       {
+        field(row) {
+          const roles = {
+            ROLE_ADMIN: "Администратор",
+            ROLE_USER: "Пользователь",
+            ROLE_SUPPORT_MANAGER: "Опереатор поддержки"
+          };
+          return row.roles.map(key => roles[key]).join(", ");
+        },
         label: "roles",
-        field: "roles",
         sortable: true,
+        filterable: true,
         filterField: "roles",
-        filterable: true
+        filterDropdown: true,
+        filterOptions: [
+          {
+            value: "ROLE_ADMIN",
+            text: "Администратор"
+          },
+          {
+            value: "ROLE_USER",
+            text: "Пользователь"
+          },
+          {
+            value: "ROLE_SUPPORT_MANAGER",
+            text: "Опереатор поддержки"
+          }
+        ]
       }
     ]
   }),
