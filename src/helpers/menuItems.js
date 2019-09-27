@@ -13,6 +13,10 @@ export default [
     path: '/categories'
   },
   {
+    name: 'Объекты',
+    path: '/pests'
+  },
+  {
     name: 'Заявки',
     path: '/questions'
   }

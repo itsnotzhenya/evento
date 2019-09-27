@@ -1,12 +1,12 @@
 <template>
-  <base-crud :action="action" create :module="'Users'">
-    <template slot="crud-title">Пользователи</template>
+  <base-crud :action="action" create :module="'Pests'">
+    <template slot="crud-title">Объекты</template>
     <template slot="crud-content">
       <data-table
-        module="Users"
-        :dataGetter="`app/users`"
-        :get-data="getUsers"
-        :delete-item="deleteUser"
+        module="Pests"
+        :dataGetter="`app/pests`"
+        :get-data="getPests"
+        :delete-item="deletePest"
         :columns="columns"
         :actions="['edit', 'info', 'remove']"
       ></data-table>
@@ -18,28 +18,30 @@
 import BaseCrud from "@/components/BaseCRUD/view";
 import DataTable from "@/components/DataTable/DataTable";
 import crudMixin from "@/mixins/crudMixin";
-import roles from "@/helpers/roles";
-import usersApi from "@/api/users";
+import pestsApi from "@/api/pests";
 
 export default {
-  name: "UserTable",
+  name: "PestTable",
   mixins: [crudMixin],
   data: () => ({
     columns: [
       {
-        label: "Email",
-        field: "email",
+        label: "Название",
+        field: "name",
         sortable: true,
-        filterField: "email",
+        filterField: "name",
         filterable: true
       },
       {
-        label: "roles",
-        field: "roles",
+        field(row) {
+          return row.category.name
+        },
+        label: "Категория",
         sortable: true,
-        filterField: "roles",
+        filterField: "category",
         filterable: true
       }
+  
     ]
   }),
   components: {
@@ -47,15 +49,15 @@ export default {
     DataTable
   },
   methods: {
-    async getUsers(params = {}) {
+    async getPests(params = {}) {
       await this.$store.dispatch("app/getEntities", {
-        mutationName: "SET_USERS",
-        entityName: "users",
+        mutationName: "SET_PESTS",
+        entityName: "pests",
         params
       });
     },
-    async deleteUser(id) {
-      await usersApi.delete(id);
+    async deletePest(id) {
+      await pestsApi.delete(id);
     }
   }
 };

@@ -1,7 +1,6 @@
 import request from '@/helpers/request'
 
 export default (resourseName, getResourseModel = null) => {
-  console.log(resourseName)
   return {
     get: async (id, params = {}) => {
       return request({
