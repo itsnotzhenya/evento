@@ -85,7 +85,6 @@ export default {
           commit('SET_ROLES', data.roles)
           commit('SET_NAME', data.username)
           commit('SET_USER_INFO', data)
-          console.log('success')
           resolve(response)
         })
         .catch(error => {

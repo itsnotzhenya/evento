@@ -1,41 +1,45 @@
 import CategoryCRUD from './CRUD'
-import CategoryTable from './table'
+import CategoryList from './list'
 
 export default [
   {
-    path: '/users',
-    component: CategoryTable,
-    name: 'Users.list',
+    path: '/categories',
+    component: CategoryList,
+    name: 'Categories.list',
     meta: {
-      action: 'list',
-      role: 'ROLE_ADMIN'
+      action: 'list'
     }
   },
   {
-    path: '/users/:id/show',
+    path: '/categories/:id/show',
     component: CategoryCRUD,
-    name: 'Users.info',
+    name: 'Categories.info',
     meta: {
-      action: 'read',
-      role: 'ROLE_ADMIN'
+      action: 'read'
     }
   },
   {
-    path: '/users/:id/edit',
+    path: '/categories/:id/edit',
     component: CategoryCRUD,
-    name: 'Users.edit',
+    name: 'Categories.edit',
     meta: {
-      action: 'edit',
-      role: 'ROLE_ADMIN'
+      action: 'edit'
     }
   },
   {
-    path: '/users/create',
+    path: '/categories/create',
     component: CategoryCRUD,
-    name: 'Users.create',
+    name: 'Categories.create',
     meta: {
-      action: 'create',
-      role: 'ROLE_ADMIN'
+      action: 'create'
+    }
+  },
+  {
+    path: '/categories/:id/create',
+    component: CategoryCRUD,
+    name: 'Categories.child.create',
+    meta: {
+      action: 'create'
     }
   }
 ]

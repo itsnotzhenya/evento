@@ -14,7 +14,7 @@ export default {
     if (this.afterGet) {
       this.afterGet()
     }
-    this.subEntities.map(async (subEntity) => {
+    this.subEntities.map(async subEntity => {
       const response = await request({
         url: `/${subEntity}`,
         method: 'get'
@@ -39,13 +39,18 @@ export default {
   },
   methods: {
     async getItem () {
-      const { id } = this.$route.params
-      this.id = +id
-      if (id) {
-        console.log(this)
-        const response = await this.$store.dispatch('app/getItem', { id, entityName: this.entityName })
-        this[this.mainObjectName] = response.data
+      if (this.$route.meta.action !== 'create') {
+        const { id } = this.$route.params
+        this.id = +id
+        if (id) {
+          const response = await this.$store.dispatch('app/getItem', {
+            id,
+            entityName: this.entityName
+          })
+          this[this.mainObjectName] = response.data
+        }
       }
+
       this.loading = false
     },
     async getEntities (method, entityName, params = {}) {
@@ -55,7 +60,7 @@ export default {
       this.loading = false
     },
     async save (data) {
-      this.$refs.form.validate(async (valid) => {
+      this.$refs.form.validate(async valid => {
         if (!valid) return this.$message.error('Заполните поля')
         try {
           this.loading = true

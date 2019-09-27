@@ -3,15 +3,18 @@ import request from '@/helpers/request'
 export default {
   state: {
     users: {},
-    groups: {},
-    questions: {}
+    categories: {},
+    pests: {}
   },
   mutations: {
     SET_USERS: (state, users) => {
       state.users = users
     },
-    SET_QUESTIONS: (state, questions) => {
-      state.questions = questions
+    SET_CATEGORIES: (state, categories) => {
+      state.categories = categories
+    },
+    SET_PESTS: (state, pests) => {
+      state.pests = pests
     }
   },
   actions: {
@@ -47,7 +50,8 @@ export default {
   },
   getters: {
     users: (state) => state.users,
-    questions: (state) => state.questions
+    categories: (state) => state.categories,
+    pests: (state) => state.pests
   },
   namespaced: true
 }

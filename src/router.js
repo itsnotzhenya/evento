@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import LoginContainer from './components/Login/container'
 import userRoutes from './components/Users/routes'
 import categoryRoutes from './components/Categories/routes'
+import pestRoutes from './components/Pests/routes'
 Vue.use(Router)
 
 export default new Router({
@@ -18,6 +19,7 @@ export default new Router({
       component: LoginContainer
     },
     ...userRoutes,
-    ...categoryRoutes
+    ...categoryRoutes,
+    ...pestRoutes
   ]
 })
