@@ -68,7 +68,7 @@ export default {
   methods: {
     async saveCategory() {
       const data = { ...this.category };
-      if(this.parent_id !== 0) {
+      if(this.parent_id !== 0 && this.$route.meta.action === 'create') {
         data.parent = `api/categories/${this.parent_id}`
       }
       await this.save(data);
