@@ -52,26 +52,26 @@
 </template>
 
 <script>
-import BaseCrud from "@/components/BaseCRUD/view";
-import { rolesMap } from "@/helpers/roles";
-import crudMixin from "@/mixins/crudMixin";
-import usersApi from "@/api/users";
+import BaseCrud from '@/components/BaseCRUD/view'
+import { rolesMap } from '@/helpers/roles'
+import crudMixin from '@/mixins/crudMixin'
+import usersApi from '@/api/users'
 
 export default {
-  name: "UsersCrud",
+  name: 'UsersCrud',
   data: () => ({
     user: {
-      username: "",
+      username: '',
       roles: [],
-      phone: "",
-      email: "",
-      plainPassword: "",
+      phone: '',
+      email: '',
+      plainPassword: '',
       enabled: true
     },
     subEntities: [],
     loading: false,
-    entityName: "users",
-    mainObjectName: "user",
+    entityName: 'users',
+    mainObjectName: 'user',
     roles: rolesMap
   }),
   mixins: [crudMixin],
@@ -79,18 +79,18 @@ export default {
     BaseCrud
   },
   computed: {
-    adminIncludes() {
-      return this.user.roles.includes("ROLE_ADMIN");
+    adminIncludes () {
+      return this.user.roles.includes('ROLE_ADMIN')
     }
   },
   methods: {
-    async saveUser() {
-      const data = { ...this.user };
-      data.username = data.email;
-      await this.save(data);
+    async saveUser () {
+      const data = { ...this.user }
+      data.username = data.email
+      await this.save(data)
     }
   }
-};
+}
 </script>
 
 <style>

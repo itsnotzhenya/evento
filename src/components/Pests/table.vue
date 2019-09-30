@@ -15,33 +15,33 @@
 </template>
 
 <script>
-import BaseCrud from "@/components/BaseCRUD/view";
-import DataTable from "@/components/DataTable/DataTable";
-import crudMixin from "@/mixins/crudMixin";
-import pestsApi from "@/api/pests";
+import BaseCrud from '@/components/BaseCRUD/view'
+import DataTable from '@/components/DataTable/DataTable'
+import crudMixin from '@/mixins/crudMixin'
+import pestsApi from '@/api/pests'
 
 export default {
-  name: "PestTable",
+  name: 'PestTable',
   mixins: [crudMixin],
   data: () => ({
     columns: [
       {
-        label: "Название",
-        field: "name",
+        label: 'Название',
+        field: 'name',
         sortable: true,
-        filterField: "name",
+        filterField: 'name',
         filterable: true
       },
       {
-        field(row) {
+        field (row) {
           return row.category.name
         },
-        label: "Категория",
+        label: 'Категория',
         sortable: true,
-        filterField: "category",
+        filterField: 'category',
         filterable: true
       }
-  
+
     ]
   }),
   components: {
@@ -49,16 +49,16 @@ export default {
     DataTable
   },
   methods: {
-    async getPests(params = {}) {
-      await this.$store.dispatch("app/getEntities", {
-        mutationName: "SET_PESTS",
-        entityName: "pests",
+    async getPests (params = {}) {
+      await this.$store.dispatch('app/getEntities', {
+        mutationName: 'SET_PESTS',
+        entityName: 'pests',
         params
-      });
+      })
     },
-    async deletePest(id) {
-      await pestsApi.delete(id);
+    async deletePest (id) {
+      await pestsApi.delete(id)
     }
   }
-};
+}
 </script>

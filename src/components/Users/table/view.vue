@@ -15,50 +15,50 @@
 </template>
 
 <script>
-import BaseCrud from "@/components/BaseCRUD/view";
-import DataTable from "@/components/DataTable/DataTable";
-import crudMixin from "@/mixins/crudMixin";
-import roles from "@/helpers/roles";
-import usersApi from "@/api/users";
+import BaseCrud from '@/components/BaseCRUD/view'
+import DataTable from '@/components/DataTable/DataTable'
+import crudMixin from '@/mixins/crudMixin'
+import roles from '@/helpers/roles'
+import usersApi from '@/api/users'
 
 export default {
-  name: "UserTable",
+  name: 'UserTable',
   mixins: [crudMixin],
   data: () => ({
     columns: [
       {
-        label: "Email",
-        field: "email",
+        label: 'Email',
+        field: 'email',
         sortable: true,
-        filterField: "email",
+        filterField: 'email',
         filterable: true
       },
       {
-        field(row) {
+        field (row) {
           const roles = {
-            ROLE_ADMIN: "Администратор",
-            ROLE_USER: "Пользователь",
-            ROLE_SUPPORT_MANAGER: "Опереатор поддержки"
-          };
-          return row.roles.map(key => roles[key]).join(", ");
+            ROLE_ADMIN: 'Администратор',
+            ROLE_USER: 'Пользователь',
+            ROLE_SUPPORT_MANAGER: 'Опереатор поддержки'
+          }
+          return row.roles.map(key => roles[key]).join(', ')
         },
-        label: "roles",
+        label: 'roles',
         sortable: true,
         filterable: true,
-        filterField: "roles",
+        filterField: 'roles',
         filterDropdown: true,
         filterOptions: [
           {
-            value: "ROLE_ADMIN",
-            text: "Администратор"
+            value: 'ROLE_ADMIN',
+            text: 'Администратор'
           },
           {
-            value: "ROLE_USER",
-            text: "Пользователь"
+            value: 'ROLE_USER',
+            text: 'Пользователь'
           },
           {
-            value: "ROLE_SUPPORT_MANAGER",
-            text: "Опереатор поддержки"
+            value: 'ROLE_SUPPORT_MANAGER',
+            text: 'Опереатор поддержки'
           }
         ]
       }
@@ -69,16 +69,16 @@ export default {
     DataTable
   },
   methods: {
-    async getUsers(params = {}) {
-      await this.$store.dispatch("app/getEntities", {
-        mutationName: "SET_USERS",
-        entityName: "users",
+    async getUsers (params = {}) {
+      await this.$store.dispatch('app/getEntities', {
+        mutationName: 'SET_USERS',
+        entityName: 'users',
         params
-      });
+      })
     },
-    async deleteUser(id) {
-      await usersApi.delete(id);
+    async deleteUser (id) {
+      await usersApi.delete(id)
     }
   }
-};
+}
 </script>
