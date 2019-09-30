@@ -67,7 +67,11 @@ export default {
       await this.$store.dispatch('app/getEntities', {
         mutationName: 'SET_CATEGORIES',
         entityName: 'categories',
-        params
+         params: {
+          ...params,
+          "parent[exists]": false,
+          "groups[]": 'GetCategoryChildren'
+        }
       })
     },
     onDelete (id) {
