@@ -1,12 +1,11 @@
 <template>
-  <base-crud :action="action" create :module="'Pests'">
-    <template slot="crud-title">Объекты</template>
+  <base-crud :action="action" create :module="'Results'">
+    <template slot="crud-title">Результаты проверок</template>
     <template slot="crud-content">
       <data-table
-        module="Pests"
-        :dataGetter="`app/pests`"
-        :get-data="getPests"
-        :delete-item="deletePest"
+        module="Results"
+        :dataGetter="`app/predictions_results`"
+        :get-data="getResults"
         :columns="columns"
         :actions="['edit', 'info', 'remove']"
       ></data-table>
@@ -18,30 +17,29 @@
 import BaseCrud from '@/components/BaseCRUD/view'
 import DataTable from '@/components/DataTable/DataTable'
 import crudMixin from '@/mixins/crudMixin'
-import pestsApi from '@/api/pests'
+import resultsApi from '@/api/results'
 
 export default {
-  name: 'PestTable',
+  name: 'ResultTable',
   mixins: [crudMixin],
   data: () => ({
     columns: [
       {
-        label: 'Название',
-        field: 'name',
+        field: 'id',
+        label: 'id',
         sortable: true,
-        filterField: 'name',
+        filterField: 'id',
         filterable: true
       },
       {
-        field (row) {
+        field(row) {
           return row.category ? row.category.name : "" 
         },
-        label: 'Категория',
+        label: 'Category',
         sortable: true,
         filterField: 'category',
         filterable: true
       }
-
     ]
   }),
   components: {
@@ -49,15 +47,12 @@ export default {
     DataTable
   },
   methods: {
-    async getPests (params = {}) {
+    async getResults (params = {}) {
       await this.$store.dispatch('app/getEntities', {
-        mutationName: 'SET_PESTS',
-        entityName: 'pests',
+        mutationName: 'SET_RESULTS',
+        entityName: 'predictions_results',
         params
       })
-    },
-    async deletePest (id) {
-      await pestsApi.delete(id)
     }
   }
 }

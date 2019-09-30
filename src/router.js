@@ -4,6 +4,7 @@ import LoginContainer from './components/Login/container'
 import userRoutes from './components/Users/routes'
 import categoryRoutes from './components/Categories/routes'
 import pestRoutes from './components/Pests/routes'
+import resultsRoutes from './components/Results/routes'
 Vue.use(Router)
 
 export default new Router({
@@ -12,7 +13,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/users'
+      redirect: '/predictions_results'
     },
     {
       path: '/login',
@@ -20,6 +21,7 @@ export default new Router({
     },
     ...userRoutes,
     ...categoryRoutes,
-    ...pestRoutes
+    ...pestRoutes,
+    ...resultsRoutes
   ]
 })

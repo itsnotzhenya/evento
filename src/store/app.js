@@ -4,7 +4,8 @@ export default {
   state: {
     users: {},
     categories: {},
-    pests: {}
+    pests: {},
+    predictions_results: {}
   },
   mutations: {
     SET_USERS: (state, users) => {
@@ -15,6 +16,9 @@ export default {
     },
     SET_PESTS: (state, pests) => {
       state.pests = pests
+    },
+    SET_RESULTS: (state, results) => {
+      state.predictions_results = results
     }
   },
   actions: {
@@ -46,12 +50,21 @@ export default {
         method,
         data
       })
+    },
+    async postFile (_, data) {
+      const response = await request({
+        url: `/files`,
+        method: 'post',
+        data
+      })
+      return response
     }
   },
   getters: {
-    users: (state) => state.users,
-    categories: (state) => state.categories,
-    pests: (state) => state.pests
+    users: state => state.users,
+    categories: state => state.categories,
+    pests: state => state.pests,
+    predictions_results: state => state.predictions_results
   },
   namespaced: true
 }

@@ -5,6 +5,10 @@
 */
 export default [
   {
+    name: 'Результаты проверок',
+    path: '/predictions_results'
+  },
+  {
     name: 'Пользователи',
     path: '/users'
   },
