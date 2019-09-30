@@ -38,43 +38,43 @@
 </template>
 
 <script>
-import BaseCrud from "@/components/BaseCRUD/view";
-import crudMixin from "@/mixins/crudMixin";
-import categoriesApi from "@/api/categories";
+import BaseCrud from '@/components/BaseCRUD/view'
+import crudMixin from '@/mixins/crudMixin'
+import categoriesApi from '@/api/categories'
 
 export default {
-  name: "CategoriesCrud",
+  name: 'CategoriesCrud',
   data: () => ({
     category: {
-      name: "",
-      description: ""
+      name: '',
+      description: ''
     },
     parent_id: 0,
     subEntities: [],
     loading: false,
-    entityName: "categories",
-    mainObjectName: "category"
+    entityName: 'categories',
+    mainObjectName: 'category'
   }),
   mixins: [crudMixin],
   components: {
     BaseCrud
   },
   computed: {},
-  mounted(){
-    if(this.$route.params.id) {
+  mounted () {
+    if (this.$route.params.id) {
       this.parent_id = this.$route.params.id
     }
   },
   methods: {
-    async saveCategory() {
-      const data = { ...this.category };
-      if(this.parent_id !== 0 && this.$route.meta.action === 'create') {
+    async saveCategory () {
+      const data = { ...this.category }
+      if (this.parent_id !== 0 && this.$route.meta.action === 'create') {
         data.parent = `api/categories/${this.parent_id}`
       }
-      await this.save(data);
+      await this.save(data)
     }
   }
-};
+}
 </script>
 
 <style>

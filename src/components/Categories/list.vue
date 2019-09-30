@@ -10,6 +10,9 @@
               <el-button type="text" size="mini" @click="createCategory(node.data.id)">
                 <i class="el-icon-plus"></i>
               </el-button>
+              <el-button type="text" size="mini" @click="readCategory(node.data.id)">
+                <i class="el-icon-info"></i>
+              </el-button>
               <el-button type="text" size="mini" @click="editCategory(node.data.id)">
                 <i class="el-icon-edit"></i>
               </el-button>
@@ -25,15 +28,15 @@
 </template>
 
 <script>
-import BaseCrud from "@/components/BaseCRUD/view";
-import DataTable from "@/components/DataTable/DataTable";
-import crudMixin from "@/mixins/crudMixin";
-import categoriesApi from "@/api/categories";
-import { makeTree } from "@/helpers/makeTree";
-import { mapGetters } from "vuex";
+import BaseCrud from '@/components/BaseCRUD/view'
+import DataTable from '@/components/DataTable/DataTable'
+import crudMixin from '@/mixins/crudMixin'
+import categoriesApi from '@/api/categories'
+import { makeTree } from '@/helpers/makeTree'
+import { mapGetters } from 'vuex'
 
 export default {
-  name: "CategoryList",
+  name: 'CategoryList',
   mixins: [crudMixin],
   data: () => ({
     categoriesTree: [],
@@ -43,39 +46,39 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      categories: "app/categories"
+      categories: 'app/categories'
     })
   },
   components: {
     BaseCrud,
     DataTable
   },
-  async mounted() {
-    await this.loadData();
+  async mounted () {
+    await this.loadData()
   },
   methods: {
-    async loadData() {
+    async loadData () {
       this.load = true
-      let data = await this.getCategories();
+      let data = await this.getCategories()
       this.categoriesTree = this.categories.items
       this.load = false
     },
-    async getCategories(params = {}) {
-      await this.$store.dispatch("app/getEntities", {
-        mutationName: "SET_CATEGORIES",
-        entityName: "categories",
+    async getCategories (params = {}) {
+      await this.$store.dispatch('app/getEntities', {
+        mutationName: 'SET_CATEGORIES',
+        entityName: 'categories',
         params
-      });
+      })
     },
-    onDelete(id) {
+    onDelete (id) {
       this.deleteItemId = id
-      this.$confirm("Вы уверены, что хотите удалить элемент?", "", {
-        confirmButtonText: "Удалить",
-        cancelButtonText: "Отмена",
-        type: "warning"
-      }).then(this.onDialogConfirm);
+      this.$confirm('Вы уверены, что хотите удалить элемент?', '', {
+        confirmButtonText: 'Удалить',
+        cancelButtonText: 'Отмена',
+        type: 'warning'
+      }).then(this.onDialogConfirm)
     },
-     async onDialogConfirm () {
+    async onDialogConfirm () {
       try {
         await this.deleteCategory(this.deleteItemId)
         this.$message({
@@ -95,17 +98,20 @@ export default {
         }
       }
     },
-    async deleteCategory(id) {
-      await categoriesApi.delete(id);
+    async deleteCategory (id) {
+      await categoriesApi.delete(id)
     },
-    editCategory(id) {
-      this.$router.push({ path: `/categories/${id}/edit` });
+    readCategory (id) {
+      this.$router.push({ path: `/categories/${id}/show` })
     },
-    createCategory(id) {
-      this.$router.push({ path: `/categories/${id}/create` });
+    editCategory (id) {
+      this.$router.push({ path: `/categories/${id}/edit` })
+    },
+    createCategory (id) {
+      this.$router.push({ path: `/categories/${id}/create` })
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .custom-tree-node {
