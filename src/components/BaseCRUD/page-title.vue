@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row type="flex" align="middle">
-      <el-col :span="4">
+      <el-col :span="8">
         <slot name="title">{{computedTitle}}</slot>
       </el-col>
       <el-col :span="18" class="text_right">

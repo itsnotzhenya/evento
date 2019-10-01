@@ -1,8 +1,9 @@
 <template>
-  <base-crud :action="action" create :module="'Results'">
-    <template slot="crud-title">Результаты проверок</template>
+  <base-crud :action="action" :module="'Results'">
+    <template slot="crud-title">{{isResults ? 'Результаты прогноза' : 'Заявки'}}</template>
     <template slot="crud-content">
       <data-table
+        ref="results"
         module="Results"
         :dataGetter="`app/predictions_results`"
         :get-data="getResults"
@@ -14,31 +15,33 @@
 </template>
 
 <script>
-import BaseCrud from '@/components/BaseCRUD/view'
-import DataTable from '@/components/DataTable/DataTable'
-import crudMixin from '@/mixins/crudMixin'
-import resultsApi from '@/api/results'
+import BaseCrud from "@/components/BaseCRUD/view";
+import DataTable from "@/components/DataTable/DataTable";
+import crudMixin from "@/mixins/crudMixin";
+import resultsApi from "@/api/results";
 
 export default {
-  name: 'ResultTable',
+  name: "ResultTable",
   mixins: [crudMixin],
   data: () => ({
     columns: [
       {
-        field: 'id',
-        label: 'id',
-        sortable: true,
-        filterField: 'id',
-        filterable: true
+        field(row) {
+          return row.user.email;
+        },
+        label: "Пользователь"
       },
       {
         field(row) {
-          return row.category ? row.category.name : "" 
+          return row.category ? row.category.name : "";
         },
-        label: 'Category',
-        sortable: true,
-        filterField: 'category',
-        filterable: true
+        label: "Category"
+      },
+      {
+        field(row) {
+          return row.dateCreate.slice(0, 10);
+        },
+        label: "Дата создания"
       }
     ]
   }),
@@ -46,14 +49,34 @@ export default {
     BaseCrud,
     DataTable
   },
+  computed: {
+    isResults() {
+      return ~this.$route.name.indexOf("Result");
+    }
+  },
+  watch: {
+    isResults: async function() {
+      await this.$refs['results'].reloadData()
+    }
+  },
   methods: {
-    async getResults (params = {}) {
-      await this.$store.dispatch('app/getEntities', {
-        mutationName: 'SET_RESULTS',
-        entityName: 'predictions_results',
-        params
-      })
+    async getResults(params = {}) {
+      if (this.isResults) {
+        params = {
+          hasAnswer: true
+        };
+      } else
+        params = {
+          hasAnswer: false
+        };
+      await this.$store.dispatch("app/getEntities", {
+        mutationName: "SET_RESULTS",
+        entityName: "predictions_results",
+        params: {
+          ...params
+        }
+      });
     }
   }
-}
+};
 </script>

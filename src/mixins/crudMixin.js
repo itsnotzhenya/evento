@@ -9,19 +9,7 @@ export default {
     id: null
   }),
   async beforeMount () {
-    this.loading = true
-    await this.getItem()
-    if (this.afterGet) {
-      this.afterGet()
-    }
-    this.subEntities.map(async subEntity => {
-      const response = await request({
-        url: `/${subEntity}`,
-        method: 'get'
-      })
-      this[subEntity] = response.data.items
-    })
-    this.loading = false
+    await this.loadData()
   },
   computed: {
     /**
@@ -38,6 +26,21 @@ export default {
     }
   },
   methods: {
+    async loadData () {
+      this.loading = true
+      await this.getItem()
+      if (this.afterGet) {
+        this.afterGet()
+      }
+      this.subEntities.map(async subEntity => {
+        const response = await request({
+          url: `/${subEntity}`,
+          method: 'get'
+        })
+        this[subEntity] = response.data.items
+      })
+      this.loading = false
+    },
     async getItem () {
       if (this.$route.meta.action !== 'create') {
         const { id } = this.$route.params

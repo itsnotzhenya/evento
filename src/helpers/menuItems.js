@@ -22,6 +22,6 @@ export default [
   },
   {
     name: 'Заявки',
-    path: '/questions'
+    path: '/requests'
   }
 ]

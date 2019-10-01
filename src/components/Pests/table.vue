@@ -27,19 +27,13 @@ export default {
     columns: [
       {
         label: 'Название',
-        field: 'name',
-        sortable: true,
-        filterField: 'name',
-        filterable: true
+        field: 'name'
       },
       {
         field (row) {
           return row.category ? row.category.name : "" 
         },
-        label: 'Категория',
-        sortable: true,
-        filterField: 'category',
-        filterable: true
+        label: 'Категория'
       }
 
     ]

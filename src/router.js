@@ -5,6 +5,7 @@ import userRoutes from './components/Users/routes'
 import categoryRoutes from './components/Categories/routes'
 import pestRoutes from './components/Pests/routes'
 import resultsRoutes from './components/Results/routes'
+
 Vue.use(Router)
 
 export default new Router({
