@@ -17,8 +17,10 @@
         :show-message="false"
         :model="pest"
       >
-        <!-- TODO: Форму вынести нахой -->
         <el-row class="form__row">
+          <el-col :span="10" v-if="pest.file && pest.file.path">
+            <img class="file" :src="`/uploads/${pest.file.path}`" alt="file" />
+          </el-col>
           <el-col :span="10">
             <el-form-item prop="name" required label="Название">
               <el-input type="text" v-model="pest.name" />
@@ -35,11 +37,10 @@
                 />
               </el-select>
             </el-form-item>
-            {{pest}}
           </el-col>
-          <el-col :span="4">
+
+          <el-col :span="4" v-if="action !== 'read'">
             <el-form-item prop="file">
-              <!-- TODO: Вынести нахой -->
               <el-upload
                 class="upload-demo"
                 action="https://http://207.246.94.5:9081/api/files"
@@ -87,13 +88,12 @@ export default {
   async mounted() {
     await this.getCategories();
     this.categories = this.$store.getters["app/categories"].items;
-    
   },
   methods: {
     async savePest() {
       const data = { ...this.pest };
       data.category = `api/categories/${data.category}`;
-      if(data.file) data.file = `api/files/${data.file}`
+      if (data.file) data.file = `api/files/${data.file.id}`
       await this.save(data);
     },
     async getCategories(params = {}) {
@@ -116,8 +116,8 @@ export default {
         data.append("file", raw);
         try {
           this.loading = true
-          const file = await this.$store.dispatch("app/postFile", data);
-          this.pest.file = file.data.id;
+          const file = await this.$store.dispatch("pests/postFile", data)
+          this.pest.file = file
           this.loading = false
         } catch (e) {
           this.$message.error(e.response.data.detail);
@@ -135,5 +135,8 @@ export default {
 .form__row {
   display: flex;
   flex-direction: column;
+}
+.file {
+  max-width: 300px;
 }
 </style>

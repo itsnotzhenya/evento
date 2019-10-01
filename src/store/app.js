@@ -50,14 +50,6 @@ export default {
         method,
         data
       })
-    },
-    async postFile (_, data) {
-      const response = await request({
-        url: `/files`,
-        method: 'post',
-        data
-      })
-      return response
     }
   },
   getters: {
