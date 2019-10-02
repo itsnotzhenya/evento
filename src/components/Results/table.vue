@@ -9,7 +9,7 @@
         :get-data="getResults"
         :delete-item="deleteResult"
         :columns="columns"
-        :actions="actions"
+        :actions='["info", "edit", "remove"]'
       ></data-table>
     </template>
   </base-crud>
@@ -60,11 +60,6 @@ export default {
     },
     module() {
       return ~this.$route.name.indexOf("Result") ? "Results" : "Request";
-    },
-    actions() {
-      return ~this.$route.name.indexOf("Result")
-        ? ["info", "remove"]
-        : ["info", "edit", "remove"];
     }
   },
   watch: {

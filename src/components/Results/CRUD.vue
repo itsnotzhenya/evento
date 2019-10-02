@@ -3,7 +3,7 @@
     v-loading="loading"
     :module="`Results`"
     :action="action"
-    :edit="isEdit"
+    edit
     create
     :id="id"
     @save="saveResult"
@@ -38,7 +38,7 @@
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="14">
+          <el-col v-if="action === 'read'" :span="14">
             <el-form-item
               prop="result"
               v-if="result.json && result.json.boxes.length"
@@ -90,9 +90,6 @@ export default {
     mainObjectName: "result"
   }),
   computed: {
-    isEdit() {
-      return !!~this.$route.name.indexOf("Request");
-    },
     pests() {
       return this.$store.getters['app/pests'].items
     }
