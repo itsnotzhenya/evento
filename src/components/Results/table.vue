@@ -1,14 +1,15 @@
 <template>
-  <base-crud :action="action" :module="'Results'">
+  <base-crud :action="action" :module="module">
     <template slot="crud-title">{{isResults ? 'Результаты прогноза' : 'Заявки'}}</template>
     <template slot="crud-content">
       <data-table
         ref="results"
-        module="Results"
+        :module="module"
         :dataGetter="`app/predictions_results`"
         :get-data="getResults"
+        :delete-item="deleteResult"
         :columns="columns"
-        :actions="['edit', 'info', 'remove']"
+        :actions="actions"
       ></data-table>
     </template>
   </base-crud>
@@ -25,6 +26,10 @@ export default {
   mixins: [crudMixin],
   data: () => ({
     columns: [
+      {
+        field: 'id',
+        label: "id"
+      },
       {
         field(row) {
           return row.user.email;
@@ -52,11 +57,19 @@ export default {
   computed: {
     isResults() {
       return ~this.$route.name.indexOf("Result");
+    },
+    module() {
+      return ~this.$route.name.indexOf("Result") ? "Results" : "Request";
+    },
+    actions() {
+      return ~this.$route.name.indexOf("Result")
+        ? ["info", "remove"]
+        : ["info", "edit", "remove"];
     }
   },
   watch: {
     isResults: async function() {
-      await this.$refs['results'].reloadData()
+      await this.$refs["results"].reloadData();
     }
   },
   methods: {
@@ -76,6 +89,9 @@ export default {
           ...params
         }
       });
+    },
+    async deleteResult(id) {
+      await resultsApi.delete(id);
     }
   }
 };

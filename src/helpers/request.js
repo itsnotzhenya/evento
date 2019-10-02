@@ -11,7 +11,7 @@ const service = axios.create()
 
 let isPending = false
 
-const serviceDecorator = (config) => {
+const serviceDecorator = config => {
   const checking = config.url.indexOf(process.env.VUE_APP_TOKEN_PATH) === -1
   if (isPending && checking) {
     return new Promise(function (resolve, reject) {
@@ -22,42 +22,49 @@ const serviceDecorator = (config) => {
   return new Promise(async function (resolve, reject) {
     if (checking) {
       config.url = `${process.env.VUE_APP_API_PATH}${config.url}`
-      lastRequest = ({ config, resolve, reject })
+      lastRequest = { config, resolve, reject }
     }
     try {
       const response = await service(config)
       resolve(response)
     } catch (error) {
       console.log(`Error in request: ${error}`)
+      Message.error('Неправильный логин или пароль')
       reject(error)
     }
   })
 }
 
-service.interceptors.request.use(config => {
-  config.headers = {
-    accept: 'application/json',
-    'Content-Type': 'application/json'
+service.interceptors.request.use(
+  config => {
+    config.headers = {
+      accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+    const token = store.getters.token || getToken()
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`
+    }
+    return config
+  },
+  error => {
+    console.log('error on request', error)
+    return Promise.reject(error)
   }
-  const token = store.getters.token || getToken()
-  if (token) {
-    config.headers['Authorization'] = `Bearer ${token}`
-  }
-  return config
-}, error => {
-  console.log('error on request', error)
-  return Promise.reject(error)
-})
+)
 
 async function refreshToken () {
-  return new Promise((resolve) => {
-    store.dispatch('users/RefreshToken').then(() => {
-      resolve()
-    }).catch(() => {
-      console.log('here')
-      Message.error('Ошибка авторизации, пожалуйста пройдите авторизацию')
-      router.push({ path: '/login' })
-    })
+  return new Promise(resolve => {
+    store
+      .dispatch('users/RefreshToken')
+      .then(() => {
+        resolve()
+      })
+      .catch(() => {
+        console.log('here')
+        Message.error('Ошибка авторизации, пожалуйста пройдите авторизацию')
+        router.push({ path: '/login' })
+      })
   })
 }
 
@@ -81,7 +88,6 @@ service.interceptors.response.use(
     return response
   },
   async (error, request) => {
-    console.log('err', error.response.data)
     if (error.response && error.response.status === 401) {
       if (error.response.data.error === 'access_denied') {
         store.dispatch('LogOut').then(() => {
@@ -111,6 +117,7 @@ service.interceptors.response.use(
     return new Promise((resolve, reject) => {
       reject(error)
     })
-  })
+  }
+)
 
 export default serviceDecorator
