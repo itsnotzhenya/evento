@@ -5,7 +5,7 @@
 */
 export default [
   {
-    name: 'Результаты проверок',
+    name: 'Результаты прогноза',
     path: '/predictions_results'
   },
   {

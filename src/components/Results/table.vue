@@ -40,7 +40,7 @@ export default {
         field(row) {
           return row.category ? row.category.name : "";
         },
-        label: "Category"
+        label: "Категория"
       },
       {
         field(row) {
@@ -69,19 +69,21 @@ export default {
   },
   methods: {
     async getResults(params = {}) {
+      let queryParams = []
       if (this.isResults) {
-        params = {
+        queryParams = {
           hasAnswer: true
         };
       } else
-        params = {
+        queryParams = {
           hasAnswer: false
         };
       await this.$store.dispatch("app/getEntities", {
         mutationName: "SET_RESULTS",
         entityName: "predictions_results",
         params: {
-          ...params
+          ...params,
+          ...queryParams
         }
       });
     },
