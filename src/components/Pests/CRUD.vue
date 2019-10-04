@@ -16,6 +16,7 @@
         label-position="left"
         :show-message="false"
         :model="pest"
+        :rules="rules"
       >
         <el-row class="form__row">
           <el-col :span="10" v-if="pest.file && pest.file.path">
@@ -68,18 +69,36 @@ import mapGetters from "vuex";
 
 export default {
   name: "PestsCrud",
-  data: () => ({
-    pest: {
-      name: "",
-      category: null,
-      enabled: true
-    },
-    categories: {},
-    subEntities: [],
-    loading: false,
-    entityName: "pests",
-    mainObjectName: "pest"
-  }),
+  data() {
+    let validName = (rule, value, callback) => {
+      let name = value.trim();
+      if (name === "" || name === undefined) {
+        callback(new Error("Введите название"));
+      }
+      callback();
+    };
+    return {
+      pest: {
+        name: "",
+        category: null,
+        enabled: true
+      },
+      categories: {},
+      subEntities: [],
+      loading: false,
+      entityName: "pests",
+      mainObjectName: "pest",
+      rules: {
+        name: [
+          {
+            required: true,
+            validator: validName,
+            trigger: blur
+          }
+        ]
+      }
+    };
+  },
   computed: {},
   mixins: [crudMixin],
   components: {
