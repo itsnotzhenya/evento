@@ -124,10 +124,10 @@ export default {
         } catch (e) {
           let errors = e.response.data.violations;
           errors.forEach((error, index) => {
-            if (error.propertyPath === "usernameCanonical") return;
+            if (error.propertyPath === "usernameCanonical" || error.propertyPath === "username" ) return;
             let timeout = (index + 1) * 100;
             setTimeout(() => {
-              this.$message.error(error.message);
+              this.$message.error(`${error.propertyPath}: ${error.message}`);
             }, timeout);
           });
           return false;
