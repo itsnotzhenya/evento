@@ -18,12 +18,12 @@
         :model="result"
       >
         <el-row class="form__row">
-          <el-col :span="10">
+          <el-col :span="14">
             <el-form-item prop="category" v-if="result.category" label="Категория:">
               <span>{{result.category.name}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="10" v-if="result.file && result.file.path">
+          <el-col :span="14" v-if="result.file && result.file.path">
             <img class="file" :src="`/uploads/${result.file.path}`" alt="file" />
           </el-col>
           <el-col v-if="action === 'edit'" :span="10">
@@ -42,27 +42,26 @@
             <el-form-item
               prop="result"
               v-if="result.json && result.json.boxes.length"
-              :label="`${result.category.name}:`"
+              label="Диагноз:`"
             >
               <span>{{result.json.boxes[0].classname.name}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="10">
+          <el-col v-if="action === 'read'" :span="14">
             <el-form-item
               prop="result"
               v-if="result.json && result.json.boxes.length"
               label="Процент соответствия:"
             >
-              <span v-if="action === 'read'">{{Math.floor(result.json.boxes[0].value*100)}}%</span>
-              <el-input v-if="action !== 'read'" v-model="result.json.boxes[0].value" />
+              <span>{{Math.floor(result.json.boxes[0].value*100)}}%</span>
             </el-form-item>
           </el-col>
-          <el-col :span="10">
+          <el-col :span="14">
             <el-form-item prop="name" v-if="result.user" label="Пользователь:">
               <span>{{result.user.email}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="10">
+          <el-col :span="14">
             <el-form-item prop="dateCreate" v-if="result.dateCreate" label="Дата создания:">
               <span>{{result.dateCreate.slice(0, 10)}}</span>
             </el-form-item>
@@ -106,7 +105,6 @@ export default {
       delete data.category
       delete data.file
       delete data.user
-      delete data.json
       data.hasAnswer = true
       data.pests.push(`api/pests/${data.pest}`)
       delete data.pest
@@ -118,7 +116,7 @@ export default {
         entityName: "pests",
         params: {
           ...params,
-          "category": `${this.result.category.id}`
+          category: `${this.result.category.id}`
         }
       })
     },
