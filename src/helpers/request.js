@@ -29,7 +29,7 @@ const serviceDecorator = config => {
       resolve(response)
     } catch (error) {
       console.log(`Error in request: ${error}`)
-      Message.error('Неправильный логин или пароль')
+      // Message.error('Неправильный логин или пароль')
       reject(error)
     }
   })

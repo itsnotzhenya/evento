@@ -14,8 +14,9 @@
         ref="form"
         :disabled="action === 'read'"
         label-position="left"
-        :show-message="false"
+        :show-message="true"
         :model="user"
+        :rules="rules"
       >
         <el-row class="form__row">
           <el-col :span="10">
@@ -23,7 +24,7 @@
               <el-input type="email" v-model="user.email" />
             </el-form-item>
           </el-col>
-          <el-col :span="10">
+          <el-col v-if="action === 'create'" :span="10">
             <el-form-item prop="plainPassword" :required="action === 'create'" label="Пароль">
               <el-input type="password" v-model="user.plainPassword" />
             </el-form-item>
@@ -41,7 +42,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="10">
-            <el-form-item prop="phone" label="Телефон">
+            <el-form-item prop="phone" required label="Телефон">
               <el-input v-model="user.phone" />
             </el-form-item>
           </el-col>
@@ -58,22 +59,42 @@ import crudMixin from '@/mixins/crudMixin'
 import usersApi from '@/api/users'
 
 export default {
-  name: 'UsersCrud',
-  data: () => ({
-    user: {
-      username: '',
-      roles: [],
-      phone: '',
-      email: '',
-      plainPassword: '',
-      enabled: true
-    },
-    subEntities: [],
-    loading: false,
-    entityName: 'users',
-    mainObjectName: 'user',
-    roles: rolesMap
-  }),
+  name: "UsersCrud",
+  data() {
+    return {
+      user: {
+        roles: [],
+        phone: '',
+        email: '',
+        plainPassword: '',
+        enabled: true
+      },
+      subEntities: [],
+      loading: false,
+      entityName: 'users',
+      mainObjectName: 'user',
+      roles: rolesMap,
+      rules: {
+        email: {
+          required: true,
+          type: "email",
+          message: "Введите email",
+          trigger: blur
+        },
+        phone: {
+          required: true,
+          message: "Введите номер телефона",
+          trigger: blur
+        },
+        plainPassword: [
+          {
+            min: 5,
+            message: "Пароль должен содержать минимум 5 символов"
+          }
+        ]
+      }
+    };
+  },
   mixins: [crudMixin],
   components: {
     BaseCrud
@@ -84,13 +105,48 @@ export default {
     }
   },
   methods: {
-    async saveUser () {
-      const data = { ...this.user }
-      data.username = data.email
-      await this.save(data)
+    async saveUser() {
+      this.$refs.form.validate(async valid => {
+        if (!valid) return this.$message.error("Заполните поля");
+        try {
+          const data = { ...this.user };
+          data.username = data.email;
+          this.loading = true;
+          await this.$store.dispatch("app/saveEntity", {
+            id: this.id,
+            method: this.saveMethod,
+            entityName: this.entityName,
+            data
+          });
+          this.$router.push(`/${this.entityName}`);
+          this.$message.success("Успешно сохранено");
+          return true;
+        } catch (e) {
+          let errors = e.response.data.violations;
+          errors.forEach((error, index) => {
+            if (error.propertyPath === "usernameCanonical") return;
+            let timeout = (index + 1) * 100;
+            setTimeout(() => {
+              this.$message.error(error.message);
+            }, timeout);
+          });
+          return false;
+        } finally {
+          this.loading = false;
+        }
+      });
     }
+    // async saveUser() {
+    //   try {
+    //     const data = { ...this.user };
+    //     data.username = data.email;
+    //     await this.save(data);
+    //   } catch (e) {
+    //     console.log(e)
+    //   }
+    // }
   }
-}
+};
 </script>
 
 <style>

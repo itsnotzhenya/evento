@@ -29,9 +29,9 @@ export default {
       {
         label: 'Email',
         field: 'email',
-        sortable: true,
+        sortable: false,
         filterField: 'email',
-        filterable: true
+        filterable: false
       },
       {
         field (row) {
@@ -43,24 +43,24 @@ export default {
           return row.roles.map(key => roles[key]).join(', ')
         },
         label: 'roles',
-        sortable: true,
-        filterable: true,
+        sortable: false,
+        filterable: false,
         filterField: 'roles',
-        filterDropdown: true,
-        filterOptions: [
-          {
-            value: 'ROLE_ADMIN',
-            text: 'Администратор'
-          },
-          {
-            value: 'ROLE_USER',
-            text: 'Пользователь'
-          },
-          {
-            value: 'ROLE_SUPPORT_MANAGER',
-            text: 'Опереатор поддержки'
-          }
-        ]
+        // filterDropdown: true,
+        // filterOptions: [
+        //   {
+        //     value: 'ROLE_ADMIN',
+        //     text: 'Администратор'
+        //   },
+        //   {
+        //     value: 'ROLE_USER',
+        //     text: 'Пользователь'
+        //   },
+        //   {
+        //     value: 'ROLE_SUPPORT_MANAGER',
+        //     text: 'Опереатор поддержки'
+        //   }
+        // ]
       }
     ]
   }),

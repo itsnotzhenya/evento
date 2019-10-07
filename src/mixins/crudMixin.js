@@ -78,6 +78,7 @@ export default {
           return true
         } catch (error) {
           this.$message.error(error.response.data.detail)
+          // this.$message.error(error.response.data.violations[0].message)
           return false
         } finally {
           this.loading = false
