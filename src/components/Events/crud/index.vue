@@ -177,9 +177,9 @@ export default {
         myMap.controls.add(mySearchControl);
         myMap.geoObjects.add(mySearchResults);
         mySearchControl.events
-          .add("resultselect", function(e) {
+          .add("resultselect", e => {
             let index = e.get("index");
-            mySearchControl.getResult(index).then(function(res) {
+            mySearchControl.getResult(index).then((res) => {
               mySearchResults.add(res);
               if (placemark === null) {
                 placemark = new ymaps.Placemark(
@@ -189,6 +189,8 @@ export default {
                     preset: "islands#blueIcon"
                   }
                 ); 
+                this.event.lat = res.geometry._coordinates[0];
+                this.event.lng = res.geometry._coordinates[1];
                 mySearchControl.clear()
               } else {
                 myMap.geoObjects.remove(placemark);
@@ -199,6 +201,8 @@ export default {
                     preset: "islands#blueIcon"
                   }
                 );
+                this.event.lat = res.geometry._coordinates[0];
+                this.event.lng = res.geometry._coordinates[1];
                 mySearchControl.clear()
               }
             });
