@@ -1,5 +1,5 @@
 {
-  "name": "imake-admin",
+  "name": "evento-admin",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,14 +13,15 @@
   "dependencies": {
     "axios": "^0.19.0",
     "core-js": "^2.6.5",
+    "date-fns": "2.0.0",
+    "diacriticless": "1.0.1",
     "element-ui": "^2.11.1",
+    "lodash": "4.17.15",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vue-styled-components": "^1.4.9",
-    "lodash": "4.17.15",
-    "date-fns": "2.0.0",
-    "diacriticless": "1.0.1",
+    "vue-yandex-maps": "^0.8.17",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

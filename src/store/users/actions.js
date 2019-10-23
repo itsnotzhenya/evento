@@ -2,8 +2,7 @@ import {
   loginByUsername,
   getUserInfo,
   refreshToken,
-  register,
-  loginByTwoFactorCode
+  register
 } from '@/helpers/globalApi'
 import { setTokens, removeTokens, getRefreshToken } from '@/helpers/auth'
 import router from '@/router'
@@ -32,16 +31,7 @@ export default {
         })
     })
   },
-  async LoginByTwoFactorCode ({ commit }, code) {
-    try {
-      let response = await loginByTwoFactorCode(code)
 
-      commit('SET_TOKENS', response.data)
-      setTokens(response.data)
-    } catch (e) {
-      throw e
-    }
-  },
   async Register ({ commit, dispatch }, userInfo) {
     userInfo.username = userInfo.email
     try {

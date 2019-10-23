@@ -2,23 +2,11 @@ import request from '@/helpers/request'
 
 export default {
   state: {
-    users: {},
-    categories: {},
-    pests: {},
-    predictions_results: {}
+    users: {}
   },
   mutations: {
     SET_USERS: (state, users) => {
       state.users = users
-    },
-    SET_CATEGORIES: (state, categories) => {
-      state.categories = categories
-    },
-    SET_PESTS: (state, pests) => {
-      state.pests = pests
-    },
-    SET_RESULTS: (state, results) => {
-      state.predictions_results = results
     }
   },
   actions: {
@@ -53,10 +41,7 @@ export default {
     }
   },
   getters: {
-    users: state => state.users,
-    categories: state => state.categories,
-    pests: state => state.pests,
-    predictions_results: state => state.predictions_results
+    users: state => state.users
   },
   namespaced: true
 }

@@ -1,3 +1,3 @@
 import generate from './generate'
 
-export default generate('pests')
+export default generate('events')

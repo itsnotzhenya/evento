@@ -6,7 +6,8 @@
           :rules="loginRules"
           ref="loginForm"
           label-position="left">
-            <img src="@/assets/logo.png">
+            <!-- <img src="@/assets/logo.png"> -->
+            <h1>Административная панель</h1>
             <div class="user-form">
                 <el-form-item prop="username">
                     <el-input type="text" v-model="loginForm.username" autoComplete="on"

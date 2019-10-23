@@ -2,9 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import LoginContainer from './components/Login/container'
 import userRoutes from './components/Users/routes'
-import categoryRoutes from './components/Categories/routes'
-import pestRoutes from './components/Pests/routes'
-import resultsRoutes from './components/Results/routes'
+import eventRoutes from './components/Events/routes'
 
 Vue.use(Router)
 
@@ -14,15 +12,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/predictions_results'
+      redirect: '/users'
     },
     {
       path: '/login',
       component: LoginContainer
     },
     ...userRoutes,
-    ...categoryRoutes,
-    ...pestRoutes,
-    ...resultsRoutes
+    ...eventRoutes
   ]
 })

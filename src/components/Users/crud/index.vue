@@ -19,6 +19,16 @@
         :rules="rules"
       >
         <el-row class="form__row">
+            <el-col :span="10">
+            <el-form-item prop="firstName" required label="Имя">
+              <el-input v-model="user.firstName" />
+            </el-form-item>
+          </el-col>
+            <el-col :span="10">
+            <el-form-item prop="secondName" required label="Фамилия">
+              <el-input v-model="user.secondName" />
+            </el-form-item>
+          </el-col>
           <el-col :span="10">
             <el-form-item prop="email" required label="Email">
               <el-input type="email" v-model="user.email" />

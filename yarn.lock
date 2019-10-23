@@ -13936,6 +13936,11 @@ vue-template-es2015-compiler@^1.6.0, vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
+vue-yandex-maps@^0.8.17:
+  version "0.8.17"
+  resolved "https://registry.yarnpkg.com/vue-yandex-maps/-/vue-yandex-maps-0.8.17.tgz#9370c2db59d64543cc57c8fdcdec58a05349eb2e"
+  integrity sha512-/YEoQrWAPzkeoKTamcgPE/Bw7Kcpkh6Rbo3Kq6/bGgguXQ82vjYeg5SrxAMvQrY4m04UK2mkspG5yJl9ZOcvnA==
+
 vue@^2.6.10:
   version "2.6.10"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"

@@ -32,7 +32,10 @@ export default {
       try {
         await this.$store.dispatch('users/LoginByUsername', { ...formData })
         this.$router.push('/')
-      } finally {
+      } catch(e) {
+        console.log(e)
+      } 
+      finally {
         this.loading = false
       }
     }
