@@ -8,9 +8,6 @@ export default {
     loading: false,
     id: null
   }),
-  async beforeMount () {
-    await this.loadData()
-  },
   computed: {
     /**
      * Получение действия, выполняемого над сущностью, исходя из роута
@@ -27,19 +24,24 @@ export default {
   },
   methods: {
     async loadData () {
-      this.loading = true
-      await this.getItem()
-      if (this.afterGet) {
-        this.afterGet()
-      }
-      this.subEntities.map(async subEntity => {
-        const response = await request({
-          url: `/${subEntity}`,
-          method: 'get'
+      try {
+        this.loading = true
+        await this.getItem()
+        if (this.afterGet) {
+          this.afterGet()
+        }
+        this.subEntities.map(async subEntity => {
+          const response = await request({
+            url: `/${subEntity}`,
+            method: 'get'
+          })
+          this[subEntity] = response.data.items
         })
-        this[subEntity] = response.data.items
-      })
-      this.loading = false
+      } catch (e) {
+        console.log('aaaa')
+      } finally {
+        this.loading = false
+      }
     },
     async getItem () {
       if (this.$route.meta.action !== 'create') {
@@ -53,7 +55,6 @@ export default {
           this[this.mainObjectName] = response.data
         }
       }
-
       this.loading = false
     },
     async getEntities (method, entityName, params = {}) {
@@ -78,7 +79,6 @@ export default {
           return true
         } catch (error) {
           this.$message.error(error.response.data.detail)
-          // this.$message.error(error.response.data.violations[0].message)
           return false
         } finally {
           this.loading = false

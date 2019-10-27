@@ -32,7 +32,7 @@
             </el-col>
             <el-col :span="10">
               <el-form-item prop="date" label="Дата">
-                <el-input v-model="event.date" />
+                <el-date-picker v-model="event.date" type="date" format="dd.MM.yyyy"></el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="10">
@@ -60,9 +60,27 @@
                 <el-switch v-model="event.active" />
               </el-form-item>
             </el-col>
-            <el-col :span="10">
-              <el-form-item prop="imageUrl" label="imageUrl">
-                <el-input v-model="event.imageUrl" />
+            <el-col :span="10" v-if="event.imageUrl && event.imageUrl.path">
+              <img
+                class="file"
+                width="300"
+                style="margin-bottom: 20px;"
+                :src="`/uploads/${event.imageUrl.path}`"
+                alt="file"
+              />
+            </el-col>
+            <el-col :span="4" v-if="action !== 'read'">
+              <el-form-item prop="file">
+                <el-upload
+                  class="upload-demo"
+                  action="http://192.168.1.64:8181/api/files"
+                  accept="image/jpeg, image/jpg, image/png"
+                  :show-file-list="false"
+                  :auto-upload="false"
+                  :on-change="createImage"
+                >
+                  <el-button size="uploader small" type="primary">Загрузить фотографию</el-button>
+                </el-upload>
               </el-form-item>
             </el-col>
             <el-col :span="10">
@@ -71,13 +89,13 @@
               </el-form-item>
             </el-col>
             <el-col :span="10">
-              <el-form-item prop="streetNumber" label="streetNumber">
-                <el-input v-model="event.streetNumber" />
+              <el-form-item prop="street" label="Улица">
+                <el-input v-model="event.street" />
               </el-form-item>
             </el-col>
             <el-col :span="10">
-              <el-form-item prop="street" label="Улица">
-                <el-input v-model="event.street" />
+              <el-form-item prop="streetNumber" label="Номер дома">
+                <el-input v-model="event.streetNumber" />
               </el-form-item>
             </el-col>
             <el-col :span="10">
@@ -151,14 +169,14 @@ export default {
       return this.user.roles.includes("ROLE_ADMIN");
     }
   },
-  mounted() {
+  async mounted() {
+    await this.loadData();
     this.initMap();
   },
   methods: {
     initMap() {
-      let event = this.event;
-      var placemark = null;
       const onMapsReady = () => {
+        let placemark = null
         let myMap = new ymaps.Map("points-map", {
             center: [47.23153761096641, 39.73171234130842],
             zoom: 12,
@@ -174,12 +192,22 @@ export default {
               "$[properties.name]"
             )
           });
+        if (this.event.lat && this.event.lng) {
+           placemark = new ymaps.Placemark(
+            [this.event.lat, this.event.lng],
+            {},
+            {
+              preset: "islands#blueIcon"
+            }
+          );
+          myMap.geoObjects.add(placemark);
+        }
         myMap.controls.add(mySearchControl);
         myMap.geoObjects.add(mySearchResults);
         mySearchControl.events
           .add("resultselect", e => {
             let index = e.get("index");
-            mySearchControl.getResult(index).then((res) => {
+            mySearchControl.getResult(index).then(res => {
               mySearchResults.add(res);
               if (placemark === null) {
                 placemark = new ymaps.Placemark(
@@ -188,10 +216,10 @@ export default {
                   {
                     preset: "islands#blueIcon"
                   }
-                ); 
+                );
                 this.event.lat = res.geometry._coordinates[0];
                 this.event.lng = res.geometry._coordinates[1];
-                mySearchControl.clear()
+                mySearchControl.clear();
               } else {
                 myMap.geoObjects.remove(placemark);
                 placemark = new ymaps.Placemark(
@@ -203,7 +231,7 @@ export default {
                 );
                 this.event.lat = res.geometry._coordinates[0];
                 this.event.lng = res.geometry._coordinates[1];
-                mySearchControl.clear()
+                mySearchControl.clear();
               }
             });
           })
@@ -216,38 +244,49 @@ export default {
           this.event.lat = coords[0];
           this.event.lng = coords[1];
           if (placemark === null) {
-            mySearchResults.removeAll()
+            mySearchResults.removeAll();
             placemark = new ymaps.Placemark(
-              [event.lat, event.lng],
+              [this.event.lat, this.event.lng],
               {},
               {
                 preset: "islands#blueIcon"
               }
             );
-            console.log("one", placemark);
             myMap.geoObjects.add(placemark);
           } else {
-            mySearchResults.removeAll()
+            mySearchResults.removeAll();
             myMap.geoObjects.remove(placemark);
             placemark = new ymaps.Placemark(
-              [event.lat, event.lng],
+              [this.event.lat, this.event.lng],
               {},
               {
                 preset: "islands#blueIcon"
               }
             );
-            console.log("two", placemark);
             myMap.geoObjects.add(placemark);
           }
         });
       };
       ymaps.ready(onMapsReady);
     },
+    async createImage({ raw }) {
+      const data = new FormData();
+      data.append("file", raw);
+      try {
+        this.loading = true;
+        const file = await this.$store.dispatch("events/postFile", data);
+        this.event.imageUrl = file;
+        this.loading = false;
+      } catch (e) {
+        this.$message.error(e.response.data.detail);
+      }
+    },
     async saveEvent() {
       this.$refs.form.validate(async valid => {
         if (!valid) return this.$message.error("Заполните поля");
         try {
           const data = { ...this.event };
+          if (data.imageUrl) data.imageUrl = `api/files/${data.imageUrl.id}`;
           this.loading = true;
           await this.$store.dispatch("app/saveEntity", {
             id: this.id,
@@ -261,11 +300,6 @@ export default {
         } catch (e) {
           let errors = e.response.data.violations;
           errors.forEach((error, index) => {
-            if (
-              error.propertyPath === "usernameCanonical" ||
-              error.propertyPath === "username"
-            )
-              return;
             let timeout = (index + 1) * 100;
             setTimeout(() => {
               this.$message.error(`${error.propertyPath}: ${error.message}`);
@@ -281,7 +315,10 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+.el-input {
+  width: 100% !important;
+}
 .date-picker {
   width: 100% !important;
 }
@@ -292,5 +329,8 @@ export default {
 .ymap-container {
   width: 100%;
   height: 100%;
+}
+.file img {
+  max-width: 300px;
 }
 </style>

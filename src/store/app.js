@@ -2,11 +2,15 @@ import request from '@/helpers/request'
 
 export default {
   state: {
-    users: {}
+    users: {},
+    events: {}
   },
   mutations: {
     SET_USERS: (state, users) => {
       state.users = users
+    },
+    SET_EVENTS: (state, events) => {
+      state.events = events
     }
   },
   actions: {
@@ -41,7 +45,8 @@ export default {
     }
   },
   getters: {
-    users: state => state.users
+    users: state => state.users,
+    events: state => state.events
   },
   namespaced: true
 }

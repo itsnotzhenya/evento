@@ -1,6 +1,6 @@
 <template>
   <base-crud :action="action" create :module="'Events'">
-    <template slot="crud-title">Пользователи</template>
+    <template slot="crud-title">События</template>
     <template slot="crud-content">
       <data-table
         module="Events"
@@ -34,8 +34,8 @@ export default {
         filterable: false
       },
       {
-        label: "Дата",
         field: "date",
+        label: "Дата",
         sortable: false,
         filterField: "date",
         filterable: false

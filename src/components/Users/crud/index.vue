@@ -109,6 +109,10 @@ export default {
   components: {
     BaseCrud
   },
+  async mounted() {
+    await this.loadData()
+
+  },
   computed: {
     adminIncludes () {
       return this.user.roles.includes('ROLE_ADMIN')
